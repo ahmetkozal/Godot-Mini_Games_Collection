@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c885xu4ei8dt8" path="res://icon.svg" id="1_4b4a7"]
 [ext_resource type="Script" uid="uid://cpcv6jrhwegch" path="res://Scripts/PlayerScripts/snake_movement.gd" id="1_iuyki"]
+[ext_resource type="PackedScene" uid="uid://h4sdljnrgte0" path="res://Characters/snake_part.tscn" id="2_jkm1l"]
 [ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="2_uhes3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuyki"]
@@ -14,6 +15,7 @@ size = Vector2(16, 16)
 [node name="Snake" type="CharacterBody2D" unique_id=549133841]
 collision_mask = 6
 script = ExtResource("1_iuyki")
+body_part_scene = ExtResource("2_jkm1l")
 
 [node name="Head" type="Sprite2D" parent="." unique_id=945061647]
 material = SubResource("ShaderMaterial_iuyki")

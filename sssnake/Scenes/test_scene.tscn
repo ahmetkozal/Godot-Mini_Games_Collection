@@ -26,7 +26,7 @@ environment = SubResource("Environment_50ct6")
 [node name="FoodRelocater" type="Node2D" parent="." unique_id=2142678174]
 
 [node name="Food" parent="." unique_id=1852383475 node_paths=PackedStringArray("grid_system", "snake") instance=ExtResource("3_50ct6")]
-position = Vector2(128, 64)
+position = Vector2(64, 32)
 script = ExtResource("3_hb2xm")
 grid_system = NodePath("../GridSystem")
 snake = NodePath("../Snake")

@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
-@export var grid_system : Node2D
-
-@onready var CELL_SIZE : int = grid_system.GRID_SIZE
+@export var grid_system 	: Node2D
+@export var body_part_scene : PackedScene  
+@onready var body_parts 	: Node2D = $Body
+@onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 
 var grid_array 		: Array[Vector2i] = []
 var point 			: int = 0
 var k 				: float = 1.0
-var base_move_timer : float = 0.50
+var base_move_timer : float = 0.2
 var move_timer 		: float = 0.0
 var dir 			: Vector2i
 var prev_dir 		: Vector2i
@@ -25,7 +26,6 @@ func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
 		log_grid()
-		#print(grid_array)
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
@@ -59,6 +59,13 @@ func log_grid() -> void:
 	while grid_array.size() > point + 1:
 		grid_array.remove_at(0)
 
+func grow_snake():
+	var body_part = body_part_scene.instantiate()
+	body_parts.add_child(body_part)
+	body_part.position = grid_array.back() * CELL_SIZE
+	print("GRID ARRAY: ", grid_array)
+	print("body part: ",body_part.position)
+
 func control_shiny_grids(move_dir: Vector2i) -> void:
 	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
 		grid_system.vertical_color = grid_system.shiny_grid_color
@@ -71,3 +78,4 @@ func control_shiny_grids(move_dir: Vector2i) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	point += 1
+	grow_snake()
