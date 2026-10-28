@@ -4,6 +4,8 @@ extends CharacterBody2D
 
 @onready var CELL_SIZE : int = grid_system.GRID_SIZE
 
+var grid_array 		: Array[Vector2i] = []
+var point 			: int = 0
 var k 				: float = 1.0
 var base_move_timer : float = 0.50
 var move_timer 		: float = 0.0
@@ -22,7 +24,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
-		print(grid_pos)
+		log_grid()
+		#print(grid_array)
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
@@ -51,6 +54,11 @@ func get_dir() -> Vector2:
 		control_shiny_grids(dir)
 	return dir
 
+func log_grid() -> void:
+	grid_array.append(grid_pos)
+	while grid_array.size() > point + 1:
+		grid_array.remove_at(0)
+
 func control_shiny_grids(move_dir: Vector2i) -> void:
 	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
 		grid_system.vertical_color = grid_system.shiny_grid_color
@@ -59,3 +67,7 @@ func control_shiny_grids(move_dir: Vector2i) -> void:
 		grid_system.vertical_color = grid_system.standard_grid_color
 		grid_system.horizontal_color = grid_system.shiny_grid_color
 	grid_system.queue_redraw()
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	point += 1

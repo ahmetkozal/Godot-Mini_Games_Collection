@@ -7,9 +7,15 @@ const GRID_SIZE: int = 16
 @export var grid_width			: int = 640
 @export var grid_height			: int = 480
 
+var horizontal_grids 	: int
+var vertical_grids 		: int
 var shiny_grid_color 	: Color = Color(0.639, 4.0, 0.15, 1.0)
 var vertical_color 		: Color
 var horizontal_color	: Color
+
+func _ready() -> void:
+	horizontal_grids = grid_width / GRID_SIZE
+	vertical_grids 	= grid_height / GRID_SIZE
 
 func _draw() -> void:
 	

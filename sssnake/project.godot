@@ -47,9 +47,10 @@ down={
 
 [layer_names]
 
-2d_physics/layer_1="player"
-2d_physics/layer_2="wall"
-2d_physics/layer_3="enemy"
+2d_physics/layer_1="snake_head"
+2d_physics/layer_2="snake_body"
+2d_physics/layer_3="food"
+2d_physics/layer_4="wall"
 
 [physics]
 

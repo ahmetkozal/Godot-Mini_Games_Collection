@@ -20,6 +20,7 @@ scale = Vector2(0.125, 0.125)
 texture = ExtResource("1_oda7p")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2072646087]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1643491864]
 material = SubResource("ShaderMaterial_uuy33")
