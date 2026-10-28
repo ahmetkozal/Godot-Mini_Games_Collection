@@ -1,24 +1,30 @@
 extends CharacterBody2D
 
-const CELL_SIZE : int = 16
+@export var grid_system : Node2D
+
+@onready var CELL_SIZE : int = grid_system.GRID_SIZE
 
 var k 				: float = 1.0
 var base_move_timer : float = 0.50
 var move_timer 		: float = 0.0
-var dir 			: Vector2
-var prev_dir 		: Vector2
+var dir 			: Vector2i
+var prev_dir 		: Vector2i
 var can_input 		: bool
+var grid_pos		: Vector2i
 
 func _ready() -> void:
-	dir 		= Vector2.RIGHT
-	prev_dir 	= Vector2.LEFT
+	dir 		= Vector2i.RIGHT
+	prev_dir 	= dir * -1
 	can_input 	= true
+	control_shiny_grids(dir)
+	grid_pos = position / CELL_SIZE
 
 func _physics_process(delta: float) -> void:
-	var move_dir : Vector2= get_dir()
+	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
-		move_timer = 0.0
-		position += move_dir * CELL_SIZE
+		print(grid_pos)
+		grid_pos += move_dir
+		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
 		can_input = true
 		move_timer = base_move_timer
@@ -26,18 +32,30 @@ func _physics_process(delta: float) -> void:
 		move_timer -= delta
 
 
-func get_dir():
-	if Input.is_action_just_pressed("down") && prev_dir != Vector2.UP && can_input:
+func get_dir() -> Vector2:
+	if Input.is_action_just_pressed("down") && prev_dir != Vector2i.UP && can_input:
 		dir = Vector2.DOWN
 		can_input = false
-	elif Input.is_action_just_pressed("up") && prev_dir != Vector2.DOWN && can_input:
+		control_shiny_grids(dir)
+	elif Input.is_action_just_pressed("up") && prev_dir != Vector2i.DOWN && can_input:
 		dir = Vector2.UP
 		can_input = false
-	elif Input.is_action_just_pressed("left") && prev_dir != Vector2.RIGHT && can_input:
+		control_shiny_grids(dir)
+	elif Input.is_action_just_pressed("left") && prev_dir != Vector2i.RIGHT && can_input:
 		dir = Vector2.LEFT
 		can_input = false
-	elif Input.is_action_just_pressed("right") && prev_dir != Vector2.LEFT && can_input:
+		control_shiny_grids(dir)
+	elif Input.is_action_just_pressed("right") && prev_dir != Vector2i.LEFT && can_input:
 		dir = Vector2.RIGHT
 		can_input = false
+		control_shiny_grids(dir)
 	return dir
-	
+
+func control_shiny_grids(move_dir: Vector2i) -> void:
+	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
+		grid_system.vertical_color = grid_system.shiny_grid_color
+		grid_system.horizontal_color = grid_system.standard_grid_color
+	else:
+		grid_system.vertical_color = grid_system.standard_grid_color
+		grid_system.horizontal_color = grid_system.shiny_grid_color
+	grid_system.queue_redraw()

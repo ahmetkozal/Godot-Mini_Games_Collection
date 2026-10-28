@@ -5,11 +5,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tak5s"]
 shader = ExtResource("1_uuy33")
-shader_parameter/base_color = Color(1, 0, 0, 1)
+shader_parameter/base_color = Color(0.8117647, 0, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uuy33"]
-shader = ExtResource("1_uuy33")
-shader_parameter/base_color = Color(1, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
 size = Vector2(16, 16)

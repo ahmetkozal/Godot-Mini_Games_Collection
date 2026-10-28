@@ -1,28 +1,17 @@
 [gd_scene format=3 uid="uid://ct4gpdh6va1fv"]
 
-[ext_resource type="Texture2D" uid="uid://c885xu4ei8dt8" path="res://icon.svg" id="1_4b4a7"]
 [ext_resource type="Script" uid="uid://cpcv6jrhwegch" path="res://Scripts/PlayerScripts/snake_movement.gd" id="1_iuyki"]
-[ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="2_uhes3"]
+[ext_resource type="PackedScene" uid="uid://h4sdljnrgte0" path="res://Characters/snake_part.tscn" id="2_jkm1l"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5l72"]
-shader = ExtResource("2_uhes3")
-shader_parameter/base_color = Color(1, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uhes3"]
-shader = ExtResource("2_uhes3")
-shader_parameter/base_color = Color(1, 0, 0, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iuyki"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
 size = Vector2(16, 16)
 
 [node name="Snake" type="CharacterBody2D" unique_id=549133841]
 script = ExtResource("1_iuyki")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1373312024]
-material = SubResource("ShaderMaterial_r5l72")
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("1_4b4a7")
+[node name="SnakePart" parent="." unique_id=1804810442 instance=ExtResource("2_jkm1l")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1145967425]
-material = SubResource("ShaderMaterial_uhes3")
-shape = SubResource("RectangleShape2D_iuyki")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=216910057]
+shape = SubResource("RectangleShape2D_pm0dr")
+
+[editable path="SnakePart"]
