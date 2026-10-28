@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 
 var grid_array 		: Array[Vector2i] = []
+var parts			: Array[Node2D] = []
 var point 			: int = 0
 var k 				: float = 1.0
 var base_move_timer : float = 0.2
@@ -26,6 +27,7 @@ func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
 		log_grid()
+		update_part_pos()
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
@@ -56,15 +58,18 @@ func get_dir() -> Vector2:
 
 func log_grid() -> void:
 	grid_array.append(grid_pos)
-	while grid_array.size() > point + 1:
+	while grid_array.size() > point + 2:
 		grid_array.remove_at(0)
 
-func grow_snake():
+func grow_snake() -> void:
 	var body_part = body_part_scene.instantiate()
 	body_parts.add_child(body_part)
-	body_part.position = grid_array.back() * CELL_SIZE
-	print("GRID ARRAY: ", grid_array)
-	print("body part: ",body_part.position)
+	body_part.global_position = Vector2(grid_array[1]) * CELL_SIZE
+	parts.append(body_part)
+
+func update_part_pos() -> void:
+	for i in range(0,parts.size()-1):
+		pass
 
 func control_shiny_grids(move_dir: Vector2i) -> void:
 	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
