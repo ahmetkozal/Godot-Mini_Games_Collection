@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b3kpkfchxmc0o"]
+
+[ext_resource type="Script" uid="uid://dghxhk34wj8n" path="res://Scripts/grid_system.gd" id="1_50ct6"]
+[ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="2_r5l72"]
+[ext_resource type="PackedScene" uid="uid://cr8ixo2yeegap" path="res://Objects/food.tscn" id="3_50ct6"]
+
+[node name="TestScene" type="Node2D" unique_id=1599046815]
+
+[node name="GridSystem" type="Node2D" parent="." unique_id=547187740]
+script = ExtResource("1_50ct6")
+grid_color = Color(0.99996024, 0.607045, 0.54821575, 1)
+
+[node name="Snake" parent="." unique_id=549133841 instance=ExtResource("2_r5l72")]
+position = Vector2(312, 248)
+collision_mask = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
+position = Vector2(320, 240)
+
+[node name="Food" parent="." unique_id=1852383475 instance=ExtResource("3_50ct6")]
+position = Vector2(392, 248)
