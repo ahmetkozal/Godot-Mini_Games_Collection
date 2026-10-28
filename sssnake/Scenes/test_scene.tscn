@@ -10,6 +10,11 @@ background_mode = 3
 glow_enabled = true
 glow_normalized = true
 
+[sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
+font_size = 64
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
 [node name="TestScene" type="Node2D" unique_id=1599046815]
 
 [node name="GridSystem" type="Node2D" parent="." unique_id=547187740 node_paths=PackedStringArray("player")]
@@ -26,7 +31,7 @@ environment = SubResource("Environment_50ct6")
 [node name="FoodRelocater" type="Node2D" parent="." unique_id=2142678174]
 
 [node name="Food" parent="." unique_id=1852383475 node_paths=PackedStringArray("grid_system", "snake") instance=ExtResource("3_50ct6")]
-position = Vector2(64, 32)
+position = Vector2(256, 32)
 script = ExtResource("3_hb2xm")
 grid_system = NodePath("../GridSystem")
 snake = NodePath("../Snake")
@@ -35,6 +40,11 @@ snake = NodePath("../Snake")
 position = Vector2(32, 32)
 collision_mask = 2
 grid_system = NodePath("../GridSystem")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=601641547]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_hb2xm")
 
 [connection signal="body_entered" from="Food/Area2D" to="Food" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Food/Area2D" to="Snake" method="_on_area_2d_body_entered"]

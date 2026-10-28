@@ -8,13 +8,13 @@ shader = ExtResource("1_tak5s")
 shader_parameter/base_color = Color(0.23333335, 1, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
-size = Vector2(8, 8)
+size = Vector2(12, 12)
 
 [node name="Food" type="Node2D" unique_id=1852383475]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1669091140]
 material = SubResource("ShaderMaterial_6p3d6")
-scale = Vector2(0.0625, 0.0625)
+scale = Vector2(0.09375, 0.09375)
 texture = ExtResource("1_6p3d6")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=370185878]
