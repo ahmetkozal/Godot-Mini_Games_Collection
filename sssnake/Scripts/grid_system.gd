@@ -4,9 +4,10 @@ const GRID_SIZE: int = 16
 
 @export var player				: CharacterBody2D
 @export var standard_grid_color : Color = Color(0.872, 2.0, 0.624, 1.0)
-@export var grid_width			: int = 640
-@export var grid_height			: int = 480
+@export var grid_width			: int = 160
+@export var grid_height			: int = 160
 
+var grid_origin 		: Vector2
 var horizontal_grids 	: int
 var vertical_grids 		: int
 var shiny_grid_color 	: Color = Color(0.639, 4.0, 0.15, 1.0)

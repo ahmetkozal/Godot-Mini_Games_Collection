@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
+const MIN_K : float = 0.2
+
 @export var grid_system 	: Node2D
 @export var body_part_scene : PackedScene  
 
-@onready var score_label: Label = $"../ScoreLabel"
+@onready var score_label: Label = $"../../ScoreLabel"
 @onready var body_parts 	: Node2D = $Body
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 
@@ -11,7 +13,7 @@ var grid_array 		: Array[Vector2i] = []
 var parts			: Array[Node2D] = []
 var point 			: int = 0
 var k 				: float = 1.0
-var base_move_timer : float = 0.2
+var base_move_timer : float = 0.5 
 var move_timer 		: float = 0.0
 var dir 			: Vector2i
 var prev_dir 		: Vector2i
@@ -28,12 +30,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
-		
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
 		can_input = true
-		move_timer = base_move_timer
+		move_timer = base_move_timer * k
 		log_grid()
 		update_part_pos()
 	else:
@@ -67,12 +68,12 @@ func log_grid() -> void:
 func grow_snake() -> void:
 	var body_part = body_part_scene.instantiate()
 	body_parts.add_child(body_part)
-	body_part.global_position = Vector2i(grid_array[1]) * CELL_SIZE
+	body_part.global_position = grid_system.to_global(Vector2(grid_array[1] * CELL_SIZE))
 	parts.append(body_part)
 
 func update_part_pos() -> void:
 	for i in range(0,parts.size()):
-		parts[i].global_position = Vector2i(grid_array[grid_array.size()-i-2]) * CELL_SIZE
+		parts[i].global_position = grid_system.to_global(Vector2(grid_array[grid_array.size() - i - 2] * CELL_SIZE))
 
 func control_shiny_grids(move_dir: Vector2i) -> void:
 	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
@@ -86,5 +87,10 @@ func control_shiny_grids(move_dir: Vector2i) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	point += 1
+	if k >= MIN_K:
+		k -= 0.05
+	if k <= MIN_K:
+		k = MIN_K
+	print(k)
 	score_label.text = str(point)
 	grow_snake.call_deferred()
