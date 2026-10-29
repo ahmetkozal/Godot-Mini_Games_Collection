@@ -123,3 +123,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		k = MIN_K
 	score_label.text = str(point)
 	grow_snake.call_deferred()
+
+
+func _on_head_area_body_entered(body: Node2D) -> void:
+	print("DIED")

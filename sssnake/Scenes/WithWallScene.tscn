@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://ckdwr8yeum58y" path="res://Objects/wall.tscn" id="6_rlpm8"]
 [ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/screen_shake.gd" id="7_jjp5c"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_53wvu"]
+noise_type = 3
+
 [sub_resource type="Environment" id="Environment_50ct6"]
 background_mode = 3
 glow_enabled = true
@@ -48,6 +51,7 @@ grid_system = NodePath("../GridSystem")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
 position = Vector2(320, 240)
 script = ExtResource("7_jjp5c")
+noise = SubResource("FastNoiseLite_53wvu")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=975123383]
 environment = SubResource("Environment_50ct6")
