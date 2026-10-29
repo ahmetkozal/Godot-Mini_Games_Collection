@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cy7rdpx0k8ktg" path="res://Scripts/UIScripts/options_button.gd" id="3_4cwpn"]
 [ext_resource type="Script" uid="uid://bov5oxbvp2tay" path="res://Scripts/UIScripts/quit_button.gd" id="3_d8nwk"]
 [ext_resource type="Script" uid="uid://b5adknyqlebof" path="res://Scripts/UIScripts/play_button.gd" id="3_f40uw"]
+[ext_resource type="PackedScene" uid="uid://b3kpkfchxmc0o" path="res://Scenes/NoWallScene.tscn" id="4_8ctay"]
 
 [node name="MainMenu" type="Control" unique_id=1934388370]
 layout_mode = 3
@@ -47,6 +48,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("3_f40uw")
+first_level = ExtResource("4_8ctay")
 
 [node name="OptionButton" parent="PanelContainer/VBoxContainer" unique_id=680440478 instance=ExtResource("1_p8ccj")]
 layout_mode = 2

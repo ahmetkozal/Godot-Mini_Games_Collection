@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://b3kpkfchxmc0o"]
+
+[ext_resource type="Script" uid="uid://odcu0hqeiaus" path="res://Scripts/game_area.gd" id="1_og78w"]
+[ext_resource type="Script" uid="uid://dghxhk34wj8n" path="res://Scripts/grid_system.gd" id="2_8rkg2"]
+[ext_resource type="PackedScene" uid="uid://cr8ixo2yeegap" path="res://Objects/food.tscn" id="3_5dvff"]
+[ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_jgbtp"]
+[ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_25omh"]
+
+[sub_resource type="Environment" id="Environment_50ct6"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
+font_size = 64
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[node name="NoWallScene" type="Node2D" unique_id=1599046815]
+
+[node name="GameArea" type="Node2D" parent="." unique_id=922470327]
+script = ExtResource("1_og78w")
+grid_width = 320
+grid_height = 320
+
+[node name="GridSystem" type="Node2D" parent="GameArea" unique_id=547187740 node_paths=PackedStringArray("player")]
+script = ExtResource("2_8rkg2")
+player = NodePath("../Snake")
+standard_grid_color = Color(0.99999934, 0.85814625, 0.83457625, 1)
+
+[node name="Food" parent="GameArea" unique_id=1852383475 node_paths=PackedStringArray("grid_system", "snake") instance=ExtResource("3_5dvff")]
+position = Vector2(64, 32)
+script = ExtResource("4_jgbtp")
+grid_system = NodePath("../GridSystem")
+snake = NodePath("../Snake")
+
+[node name="Snake" parent="GameArea" unique_id=549133841 node_paths=PackedStringArray("grid_system") instance=ExtResource("5_25omh")]
+position = Vector2(32, 32)
+collision_mask = 2
+grid_system = NodePath("../GridSystem")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
+position = Vector2(320, 240)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=975123383]
+environment = SubResource("Environment_50ct6")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=601641547]
+offset_right = 128.0
+offset_bottom = 88.0
+label_settings = SubResource("LabelSettings_hb2xm")
+
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Food" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Snake" method="_on_area_2d_body_entered"]
+
+[editable path="GameArea/Food"]

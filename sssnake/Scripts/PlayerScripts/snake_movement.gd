@@ -5,6 +5,7 @@ const MIN_K : float = 0.2
 @export var grid_system 	: Node2D
 @export var body_part_scene : PackedScene  
 
+@onready var head: Sprite2D = $Head
 @onready var score_label: Label = $"../../ScoreLabel"
 @onready var body_parts 	: Node2D = $Body
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
@@ -34,6 +35,7 @@ func _physics_process(delta: float) -> void:
 	if move_timer <= 0.0:
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
+		head.global_rotation = Vector2(move_dir).angle()
 		prev_dir = move_dir
 		can_input = true
 		if boost_enabled:
@@ -55,18 +57,22 @@ func get_dir() -> Vector2i:
 		dir = Vector2i.DOWN
 		can_input = false
 		control_shiny_grids(dir)
+
 	elif Input.is_action_just_pressed("up") && prev_dir != Vector2i.DOWN && can_input:
 		dir = Vector2i.UP
 		can_input = false
 		control_shiny_grids(dir)
+
 	elif Input.is_action_just_pressed("left") && prev_dir != Vector2i.RIGHT && can_input:
 		dir = Vector2i.LEFT
 		can_input = false
 		control_shiny_grids(dir)
+
 	elif Input.is_action_just_pressed("right") && prev_dir != Vector2i.LEFT && can_input:
 		dir = Vector2i.RIGHT
 		can_input = false
 		control_shiny_grids(dir)
+
 	return dir
 
 func log_grid() -> void:
@@ -100,6 +106,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		k -= 0.05
 	if k <= MIN_K:
 		k = MIN_K
-	print(k)
 	score_label.text = str(point)
 	grow_snake.call_deferred()
