@@ -3,25 +3,25 @@
 [ext_resource type="Texture2D" uid="uid://c885xu4ei8dt8" path="res://icon.svg" id="1_oda7p"]
 [ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="1_uuy33"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tak5s"]
-shader = ExtResource("1_uuy33")
-shader_parameter/base_color = Color(1, 0, 1, 1)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uuy33"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
 size = Vector2(32, 32)
 
-[node name="SnakePart" type="Node2D" unique_id=1804810442]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tak5s"]
+shader = ExtResource("1_uuy33")
+shader_parameter/base_color = Color(1, 0, 1, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1497593282]
-material = SubResource("ShaderMaterial_tak5s")
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_oda7p")
+[node name="SnakePart" type="Node2D" unique_id=1804810442]
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2072646087]
 collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1643491864]
+[node name="SnakePartArea" type="CollisionShape2D" parent="Area2D" unique_id=1643491864]
 material = SubResource("ShaderMaterial_uuy33")
 shape = SubResource("RectangleShape2D_pm0dr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1497593282]
+material = SubResource("ShaderMaterial_tak5s")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_oda7p")

@@ -36,7 +36,7 @@ func shake():
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	trauma = 1.25
+	trauma = 1.2
 	if trauma:
 		trauma = max(trauma - decay, 0)
 		shake()

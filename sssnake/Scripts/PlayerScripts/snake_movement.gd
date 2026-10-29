@@ -4,8 +4,7 @@ const MIN_K : float = 0.2
 
 @export var grid_system 	: Node2D
 @export var body_part_scene : PackedScene  
-
-@onready var head: Sprite2D = $Head
+@onready var head: Sprite2D = $HeadArea/Head
 @onready var score_label: Label = $"../../ScoreLabel"
 @onready var body_parts 	: Node2D = $Body
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
@@ -124,6 +123,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	score_label.text = str(point)
 	grow_snake.call_deferred()
 
-
-func _on_head_area_body_entered(body: Node2D) -> void:
-	print("DIED")
+func _on_head_area_area_entered(area: Area2D) -> void:
+	if point > 1:
+		print(area.get_parent().name)

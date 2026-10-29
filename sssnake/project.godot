@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="sssnake"
-run/main_scene="uid://b3kpkfchxmc0o"
+run/main_scene="uid://dmb7d0myae01h"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
