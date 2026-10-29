@@ -5,6 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://cr8ixo2yeegap" path="res://Objects/food.tscn" id="3_5dvff"]
 [ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_jgbtp"]
 [ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_25omh"]
+[ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/camera_2d.gd" id="6_8rkg2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p8lu4"]
+noise_type = 3
 
 [sub_resource type="Environment" id="Environment_50ct6"]
 background_mode = 3
@@ -41,6 +45,8 @@ grid_system = NodePath("../GridSystem")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
 position = Vector2(320, 240)
+script = ExtResource("6_8rkg2")
+noise = SubResource("FastNoiseLite_p8lu4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=975123383]
 environment = SubResource("Environment_50ct6")
@@ -52,5 +58,6 @@ label_settings = SubResource("LabelSettings_hb2xm")
 
 [connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Food" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Snake" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="Camera2D" method="_on_area_2d_body_entered"]
 
 [editable path="GameArea/Food"]
