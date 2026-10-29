@@ -1,5 +1,6 @@
 extends Camera2D
-
+# copied from this reddit post
+# https://www.reddit.com/r/godot/comments/17e8s6f/screencamera_shake_2dgodot_4/
 @export var decay := 0.8 #How quickly shaking will stop [0,1].
 @export var max_offset := Vector2(100,75) #Maximum displacement in pixels.
 @export var max_roll = 0.0 #Maximum rotation in radians (use sparingly).

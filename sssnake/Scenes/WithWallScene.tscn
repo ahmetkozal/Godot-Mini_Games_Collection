@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_qldu3"]
 [ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_jmy5y"]
 [ext_resource type="PackedScene" uid="uid://ckdwr8yeum58y" path="res://Objects/wall.tscn" id="6_rlpm8"]
-[ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/camera_2d.gd" id="7_jjp5c"]
+[ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/screen_shake.gd" id="7_jjp5c"]
 
 [sub_resource type="Environment" id="Environment_50ct6"]
 background_mode = 3

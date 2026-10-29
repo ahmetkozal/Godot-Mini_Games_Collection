@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://odcu0hqeiaus" path="res://Scripts/game_area.gd" id="1_og78w"]
 [ext_resource type="Script" uid="uid://dghxhk34wj8n" path="res://Scripts/grid_system.gd" id="2_8rkg2"]
 [ext_resource type="PackedScene" uid="uid://cr8ixo2yeegap" path="res://Objects/food.tscn" id="3_5dvff"]
+[ext_resource type="PackedScene" uid="uid://ckdwr8yeum58y" path="res://Objects/wall.tscn" id="3_jgbtp"]
 [ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_jgbtp"]
 [ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_25omh"]
-[ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/camera_2d.gd" id="6_8rkg2"]
+[ext_resource type="Script" uid="uid://kvw2sy5rfgfl" path="res://Scripts/screen_shake.gd" id="6_8rkg2"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_p8lu4"]
 noise_type = 3
@@ -29,6 +30,7 @@ grid_height = 320
 
 [node name="GridSystem" type="Node2D" parent="GameArea" unique_id=547187740 node_paths=PackedStringArray("player")]
 script = ExtResource("2_8rkg2")
+wall_scene = ExtResource("3_jgbtp")
 player = NodePath("../Snake")
 standard_grid_color = Color(0.99999934, 0.85814625, 0.83457625, 1)
 
@@ -42,6 +44,8 @@ snake = NodePath("../Snake")
 position = Vector2(32, 32)
 collision_mask = 2
 grid_system = NodePath("../GridSystem")
+
+[node name="Walls" type="Node2D" parent="GameArea" unique_id=927371549]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
 position = Vector2(320, 240)

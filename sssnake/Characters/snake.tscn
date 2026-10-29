@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="2_uhes3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
-size = Vector2(24, 24)
+size = Vector2(32, 32)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuyki"]
 shader = ExtResource("2_uhes3")
@@ -28,7 +28,7 @@ shape = SubResource("RectangleShape2D_pm0dr")
 
 [node name="Head" type="Sprite2D" parent="." unique_id=945061647]
 material = SubResource("ShaderMaterial_iuyki")
-scale = Vector2(0.1875, 0.1875)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4b4a7")
 
 [node name="Polygon2D" type="Polygon2D" parent="Head" unique_id=1903486924]

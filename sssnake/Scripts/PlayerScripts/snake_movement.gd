@@ -11,6 +11,7 @@ const MIN_K : float = 0.2
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 
 var grid_array 		: Array[Vector2i] = []
+var rotation_array	: Array[float] = []
 var parts			: Array[Node2D] = []
 var point 			: int = 0
 var k 				: float = 1.0
@@ -20,6 +21,7 @@ var dir 			: Vector2i
 var prev_dir 		: Vector2i
 var can_input 		: bool
 var grid_pos		: Vector2i
+var current_rot		: float
 var boost_enabled : bool = false
 
 func _ready() -> void:
@@ -35,7 +37,8 @@ func _physics_process(delta: float) -> void:
 	if move_timer <= 0.0:
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
-		head.global_rotation = Vector2(move_dir).angle()
+		current_rot = Vector2(move_dir).angle()
+		head.global_rotation = current_rot
 		prev_dir = move_dir
 		can_input = true
 		if boost_enabled:
@@ -43,7 +46,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			move_timer = base_move_timer * k
 		log_grid()
+		log_rotation()
 		update_part_pos()
+		update_part_rotation()
 	else:
 		move_timer -= delta
 	if Input.is_action_just_pressed("boost"):
@@ -80,6 +85,11 @@ func log_grid() -> void:
 	while grid_array.size() > point + 2:
 		grid_array.remove_at(0)
 
+func log_rotation() -> void:
+	rotation_array.append(current_rot)
+	while rotation_array.size() > point + 2:
+		rotation_array.remove_at(0)
+
 func grow_snake() -> void:
 	var body_part = body_part_scene.instantiate()
 	body_parts.add_child(body_part)
@@ -89,6 +99,11 @@ func grow_snake() -> void:
 func update_part_pos() -> void:
 	for i in range(0,parts.size()):
 		parts[i].global_position = grid_system.to_global(Vector2(grid_array[grid_array.size() - i - 2] * CELL_SIZE))
+		
+
+func update_part_rotation() -> void:
+	for i in range(0,parts.size()):
+		parts[i].global_rotation = rotation_array[rotation_array.size() - i - 1]
 
 func control_shiny_grids(move_dir: Vector2i) -> void:
 	if move_dir == Vector2i.UP || move_dir == Vector2i.DOWN:
