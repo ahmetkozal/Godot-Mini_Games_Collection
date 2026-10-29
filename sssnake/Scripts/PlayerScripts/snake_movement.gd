@@ -19,8 +19,10 @@ var dir 			: Vector2i
 var prev_dir 		: Vector2i
 var can_input 		: bool
 var grid_pos		: Vector2i
+var boost_enabled : bool = false
 
 func _ready() -> void:
+	position 	= grid_system.grid_origin + Vector2(grid_system.horizontal_grids,grid_system.vertical_grids) /2 * CELL_SIZE
 	dir 		= Vector2i.RIGHT
 	prev_dir 	= dir * -1
 	can_input 	= true
@@ -34,28 +36,35 @@ func _physics_process(delta: float) -> void:
 		position = grid_pos * CELL_SIZE
 		prev_dir = move_dir
 		can_input = true
-		move_timer = base_move_timer * k
+		if boost_enabled:
+			move_timer = base_move_timer * k /2.5
+		else:
+			move_timer = base_move_timer * k
 		log_grid()
 		update_part_pos()
 	else:
 		move_timer -= delta
+	if Input.is_action_just_pressed("boost"):
+		boost_enabled = true
+	if Input.is_action_just_released("boost"):
+		boost_enabled = false
 
 
-func get_dir() -> Vector2:
+func get_dir() -> Vector2i:
 	if Input.is_action_just_pressed("down") && prev_dir != Vector2i.UP && can_input:
-		dir = Vector2.DOWN
+		dir = Vector2i.DOWN
 		can_input = false
 		control_shiny_grids(dir)
 	elif Input.is_action_just_pressed("up") && prev_dir != Vector2i.DOWN && can_input:
-		dir = Vector2.UP
+		dir = Vector2i.UP
 		can_input = false
 		control_shiny_grids(dir)
 	elif Input.is_action_just_pressed("left") && prev_dir != Vector2i.RIGHT && can_input:
-		dir = Vector2.LEFT
+		dir = Vector2i.LEFT
 		can_input = false
 		control_shiny_grids(dir)
 	elif Input.is_action_just_pressed("right") && prev_dir != Vector2i.LEFT && can_input:
-		dir = Vector2.RIGHT
+		dir = Vector2i.RIGHT
 		can_input = false
 		control_shiny_grids(dir)
 	return dir

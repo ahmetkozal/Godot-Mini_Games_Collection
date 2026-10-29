@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dmb7d0myae01h"]
+
+[ext_resource type="PackedScene" uid="uid://d2xyphskglwn1" path="res://UI/Buttons/play_button.tscn" id="1_p8ccj"]
+[ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_tk8dj"]
+[ext_resource type="Script" uid="uid://cy7rdpx0k8ktg" path="res://Scripts/UIScripts/options_button.gd" id="3_4cwpn"]
+[ext_resource type="Script" uid="uid://bov5oxbvp2tay" path="res://Scripts/UIScripts/quit_button.gd" id="3_d8nwk"]
+[ext_resource type="Script" uid="uid://b5adknyqlebof" path="res://Scripts/UIScripts/play_button.gd" id="3_f40uw"]
+
+[node name="MainMenu" type="Control" unique_id=1934388370]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tk8dj")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=737913761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=207328043]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=8559474]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"RichTextLabelTitle"
+theme_override_colors/default_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+bbcode_enabled = true
+text = "[tornado]SSSnake"
+fit_content = true
+autowrap_mode = 0
+metadata/_live_palette_bindings = {
+"theme_override_colors/default_color": "53wvu"
+}
+
+[node name="PlayButton" parent="PanelContainer/VBoxContainer" unique_id=1447952295 instance=ExtResource("1_p8ccj")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("3_f40uw")
+
+[node name="OptionButton" parent="PanelContainer/VBoxContainer" unique_id=680440478 instance=ExtResource("1_p8ccj")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Options
+"
+script = ExtResource("3_4cwpn")
+
+[node name="QuitButton" parent="PanelContainer/VBoxContainer" unique_id=1618145768 instance=ExtResource("1_p8ccj")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
+script = ExtResource("3_d8nwk")
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PlayButton" to="PanelContainer/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/OptionButton" to="PanelContainer/VBoxContainer/OptionButton" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/QuitButton" to="PanelContainer/VBoxContainer/QuitButton" method="_on_pressed"]

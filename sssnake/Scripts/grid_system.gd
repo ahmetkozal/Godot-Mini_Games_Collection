@@ -2,11 +2,13 @@ extends Node2D
 
 const GRID_SIZE: int = 16
 
+@onready var game_area: Node2D = $".."
+
 @export var player				: CharacterBody2D
 @export var standard_grid_color : Color = Color(0.872, 2.0, 0.624, 1.0)
-@export var grid_width			: int = 160
-@export var grid_height			: int = 160
 
+var grid_width			: int
+var grid_height			: int
 var grid_origin 		: Vector2
 var horizontal_grids 	: int
 var vertical_grids 		: int
@@ -15,6 +17,8 @@ var vertical_color 		: Color
 var horizontal_color	: Color
 
 func _ready() -> void:
+	grid_width = game_area.grid_width
+	grid_height= game_area.grid_height
 	horizontal_grids = grid_width / GRID_SIZE
 	vertical_grids 	= grid_height / GRID_SIZE
 

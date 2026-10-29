@@ -7,12 +7,14 @@ extends Node2D
 @onready var HORIZONTAL_GRIDS 	: int = grid_system.horizontal_grids
 @onready var VERTICAL_GRIDS 	: int = grid_system.vertical_grids
 
+func _ready() -> void:
+	position = get_random_grid() * CELL_SIZE
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	position = get_random_grid() * CELL_SIZE
 
 func get_random_int(range_int : int) -> int:
-	return randi_range(2,range_int -2)
+	return randi_range(3,range_int -3)
 
 func get_random_grid() -> Vector2i:
 	var rand_x : int = get_random_int(HORIZONTAL_GRIDS)

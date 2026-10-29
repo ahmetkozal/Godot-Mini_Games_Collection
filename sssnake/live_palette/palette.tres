@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="LivePaletteData" format=3 uid="uid://bouki7be2cx1g"]
+
+[ext_resource type="Script" uid="uid://dsi5a626rvsik" path="res://addons/live_palette/palette.gd" id="1_53wvu"]
+
+[resource]
+script = ExtResource("1_53wvu")
+entries = Array[Dictionary]([{
+"colors": {
+"Default": Color(0, 0, 0, 1)
+},
+"id": "0l7r1",
+"name": "Color 1"
+}, {
+"colors": {
+"Default": Color(0.46348572, 0.52734375, 0.4644835, 1)
+},
+"id": "53wvu",
+"name": "Color 2"
+}, {
+"colors": {
+"Default": Color(1, 0.73828125, 0.73828125, 1)
+},
+"id": "p8lu4",
+"name": "Color 3"
+}, {
+"colors": {
+"Default": Color(1, 1, 1, 1)
+},
+"id": "lllg3",
+"name": "Color 4"
+}])
+variants = PackedStringArray("Default")
