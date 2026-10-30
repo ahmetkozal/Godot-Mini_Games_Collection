@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://b3kpkfchxmc0o"]
+
+[ext_resource type="Script" uid="uid://odcu0hqeiaus" path="res://Scripts/game_area.gd" id="1_og78w"]
+[ext_resource type="Script" uid="uid://dghxhk34wj8n" path="res://Scripts/grid_system.gd" id="2_8rkg2"]
+[ext_resource type="PackedScene" uid="uid://cr8ixo2yeegap" path="res://Objects/food.tscn" id="3_5dvff"]
+[ext_resource type="PackedScene" uid="uid://ckdwr8yeum58y" path="res://Objects/wall.tscn" id="3_jgbtp"]
+[ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_jgbtp"]
+[ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_25omh"]
+[ext_resource type="Script" uid="uid://ig72k5vr6l0o" path="res://Scripts/UIScripts/game_ui.gd" id="8_jgbtp"]
+[ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="9_25omh"]
+
+[sub_resource type="Environment" id="Environment_50ct6"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
+font_size = 32
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pm0dr"]
+
+[node name="NoWallScene" type="Node2D" unique_id=1599046815]
+
+[node name="GameArea" type="Node2D" parent="." unique_id=922470327]
+script = ExtResource("1_og78w")
+grid_width = 320
+grid_height = 320
+
+[node name="GridSystem" type="Node2D" parent="GameArea" unique_id=547187740 node_paths=PackedStringArray("player")]
+script = ExtResource("2_8rkg2")
+wall_scene = ExtResource("3_jgbtp")
+player = NodePath("../Snake")
+standard_grid_color = Color(0.99999934, 0.85814625, 0.83457625, 1)
+
+[node name="Food" parent="GameArea" unique_id=1852383475 node_paths=PackedStringArray("grid_system", "snake") instance=ExtResource("3_5dvff")]
+position = Vector2(64, 32)
+script = ExtResource("4_jgbtp")
+grid_system = NodePath("../GridSystem")
+snake = NodePath("../Snake")
+
+[node name="Snake" parent="GameArea" unique_id=549133841 node_paths=PackedStringArray("grid_system") instance=ExtResource("5_25omh")]
+position = Vector2(32, 32)
+collision_mask = 2
+grid_system = NodePath("../GridSystem")
+
+[node name="Walls" type="Node2D" parent="GameArea" unique_id=927371549]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1331286782]
+position = Vector2(320, 240)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=975123383]
+environment = SubResource("Environment_50ct6")
+
+[node name="GameUI" type="CanvasLayer" parent="." unique_id=1288089426 node_paths=PackedStringArray("game_area")]
+script = ExtResource("8_jgbtp")
+game_area = NodePath("../GameArea")
+
+[node name="LeftPanel" type="Control" parent="GameUI" unique_id=2023361769]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("9_25omh")
+
+[node name="PanelContainer" type="PanelContainer" parent="GameUI/LeftPanel" unique_id=659347283]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 10.0
+
+[node name="ScoreAndMove" type="VBoxContainer" parent="GameUI/LeftPanel/PanelContainer" unique_id=861062813]
+layout_mode = 2
+
+[node name="ScoreVBox" type="VBoxContainer" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove" unique_id=1578629313]
+layout_mode = 2
+theme = ExtResource("9_25omh")
+
+[node name="Score" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/ScoreVBox" unique_id=195633505]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "SCORE"
+label_settings = SubResource("LabelSettings_hb2xm")
+
+[node name="ScoreLabel" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/ScoreVBox" unique_id=601641547]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+label_settings = SubResource("LabelSettings_hb2xm")
+
+[node name="MoveVBox" type="VBoxContainer" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove" unique_id=1645239794]
+layout_mode = 2
+theme = ExtResource("9_25omh")
+
+[node name="MoveText" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=1616822969]
+layout_mode = 2
+text = "MOVE"
+label_settings = SubResource("LabelSettings_pm0dr")
+horizontal_alignment = 1
+
+[node name="MoveNumber" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=12098654]
+layout_mode = 2
+
+[node name="RightPanel" type="Control" parent="GameUI" unique_id=1846232833]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+theme = ExtResource("9_25omh")
+
+[node name="TopPanel" type="Control" parent="GameUI" unique_id=528150826]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+theme = ExtResource("9_25omh")
+
+[node name="BottomPanel" type="Control" parent="GameUI" unique_id=748589040]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("9_25omh")
+
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Food" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="GameArea/Snake" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="GameArea/Food/Area2D" to="Camera2D" method="_on_area_2d_body_entered"]
+
+[editable path="GameArea/Food"]

@@ -5,7 +5,8 @@ const MIN_K : float = 0.2
 @export var grid_system 	: Node2D
 @export var body_part_scene : PackedScene  
 @onready var head: Sprite2D = $HeadArea/Head
-@onready var score_label: Label = $"../../ScoreLabel"
+@onready var score_label: Label = $"../../GameUI/LeftPanel/PanelContainer/ScoreAndMove/ScoreVBox/ScoreLabel"
+@onready var move_label: Label = $"../../GameUI/LeftPanel/PanelContainer/ScoreAndMove/MoveVBox/MoveNumber"
 @onready var body_parts 	: Node2D = $Body
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 
@@ -13,6 +14,7 @@ var grid_array 		: Array[Vector2i] = []
 var rotation_array	: Array[float] = []
 var parts			: Array[Node2D] = []
 var point 			: int = 0
+var move			: int = 0
 var k 				: float = 1.0
 var base_move_timer : float = 0.5 
 var move_timer 		: float = 0.0
@@ -42,8 +44,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
+		log_grid()
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
+		move+=1
+		move_label.text = str(move)
 		current_rot = Vector2(move_dir).angle()
 		teleport_in_grid()
 		head.global_rotation = current_rot
@@ -53,7 +58,7 @@ func _physics_process(delta: float) -> void:
 			move_timer = base_move_timer * k /2.5
 		else:
 			move_timer = base_move_timer * k
-		log_grid()
+		
 		log_rotation()
 		update_part_pos()
 		update_part_rotation()
@@ -117,7 +122,7 @@ func grow_snake() -> void:
 
 func update_part_pos() -> void:
 	for i in range(0,parts.size()):
-		parts[i].global_position = grid_system.to_global(Vector2(grid_array[grid_array.size() - i - 2] * CELL_SIZE))
+		parts[i].global_position = grid_system.to_global(Vector2(grid_array[grid_array.size() - i - 1] * CELL_SIZE))
 		
 
 func update_part_rotation() -> void:

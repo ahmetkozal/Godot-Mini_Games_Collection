@@ -71,4 +71,4 @@ RichTextLabelTitle/font_sizes/normal_font_size = 80
 RichTextLabelTitle/icons/horizontal_rule = SubResource("DPITexture_5oplg")
 RichTextLabelTitle/styles/focus = SubResource("StyleBoxFlat_y16la")
 RichTextLabelTitle/styles/normal = SubResource("StyleBoxFlat_y16la")
-VBoxContainer/constants/separation = 4
+VBoxContainer/constants/separation = 8
