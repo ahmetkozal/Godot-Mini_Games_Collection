@@ -44,24 +44,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
 	if move_timer <= 0.0:
-		log_grid()
-		grid_pos += move_dir
-		position = grid_pos * CELL_SIZE
-		move+=1
-		move_label.text = str(move)
-		current_rot = Vector2(move_dir).angle()
-		teleport_in_grid()
-		head.global_rotation = current_rot
-		prev_dir = move_dir
-		can_input = true
-		if boost_enabled:
-			move_timer = base_move_timer * k /2.5
-		else:
-			move_timer = base_move_timer * k
-		
-		log_rotation()
-		update_part_pos()
-		update_part_rotation()
+		do_when_moving(move_dir)
 	else:
 		move_timer -= delta
 	if Input.is_action_just_pressed("boost"):
@@ -69,6 +52,24 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("boost"):
 		boost_enabled = false
 
+func do_when_moving(move_dir:Vector2i) -> void:
+	log_grid()
+	grid_pos += move_dir
+	position = grid_pos * CELL_SIZE
+	move+=1
+	move_label.text = str(move)
+	current_rot = Vector2(move_dir).angle()
+	teleport_in_grid()
+	head.global_rotation = current_rot
+	prev_dir = move_dir
+	can_input = true
+	if boost_enabled:
+		move_timer = base_move_timer * k /2.5
+	else:
+		move_timer = base_move_timer * k
+	log_rotation()
+	update_part_pos()
+	update_part_rotation()
 
 func get_dir() -> Vector2i:
 	if Input.is_action_just_pressed("down") && prev_dir != Vector2i.UP && can_input:
