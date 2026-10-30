@@ -5,7 +5,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6p3d6"]
 shader = ExtResource("1_tak5s")
-shader_parameter/base_color = Color(0.23333335, 1, 0, 1)
+shader_parameter/base_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"shader_parameter/base_color": "53wvu"
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
 size = Vector2(24, 24)

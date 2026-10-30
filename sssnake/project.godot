@@ -26,7 +26,6 @@ window/size/viewport_height=480
 window/size/resizable=false
 window/size/borderless=true
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor_plugins]
 

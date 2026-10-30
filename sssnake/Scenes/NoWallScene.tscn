@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://ckdwr8yeum58y" path="res://Objects/wall.tscn" id="3_jgbtp"]
 [ext_resource type="Script" uid="uid://uitq46chate8" path="res://Scripts/food.gd" id="4_jgbtp"]
 [ext_resource type="PackedScene" uid="uid://ct4gpdh6va1fv" path="res://Characters/snake.tscn" id="5_25omh"]
-[ext_resource type="Script" uid="uid://ig72k5vr6l0o" path="res://Scripts/UIScripts/game_ui.gd" id="8_jgbtp"]
 [ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="9_25omh"]
 
 [sub_resource type="Environment" id="Environment_50ct6"]
@@ -16,16 +15,40 @@ glow_normalized = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
 font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_pm0dr"]
 font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_53wvu"]
-font_size = 24
+font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
 
 [node name="NoWallScene" type="Node2D" unique_id=1599046815]
+
+[node name="BG" type="PanelContainer" parent="." unique_id=488578125]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 640.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("9_25omh")
 
 [node name="GameArea" type="Node2D" parent="." unique_id=922470327]
 script = ExtResource("1_og78w")
@@ -57,12 +80,11 @@ position = Vector2(320, 240)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=975123383]
 environment = SubResource("Environment_50ct6")
 
-[node name="GameUI" type="CanvasLayer" parent="." unique_id=1288089426 node_paths=PackedStringArray("game_area")]
-script = ExtResource("8_jgbtp")
-game_area = NodePath("../GameArea")
+[node name="GameUI" type="CanvasLayer" parent="." unique_id=1288089426]
 
 [node name="LeftPanel" type="Control" parent="GameUI" unique_id=2023361769]
 layout_mode = 3
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_top = 64.0
 offset_right = 144.0
@@ -88,6 +110,7 @@ theme = ExtResource("9_25omh")
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme = ExtResource("9_25omh")
 text = "SCORE"
 label_settings = SubResource("LabelSettings_hb2xm")
 
@@ -95,6 +118,7 @@ label_settings = SubResource("LabelSettings_hb2xm")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme = ExtResource("9_25omh")
 label_settings = SubResource("LabelSettings_hb2xm")
 
 [node name="MoveVBox" type="VBoxContainer" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove" unique_id=1645239794]
@@ -105,23 +129,27 @@ alignment = 2
 
 [node name="MoveText" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=1616822969]
 layout_mode = 2
+theme = ExtResource("9_25omh")
 text = "MOVE"
 label_settings = SubResource("LabelSettings_pm0dr")
 horizontal_alignment = 1
 
 [node name="MoveNumber" type="Label" parent="GameUI/LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=12098654]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
+theme = ExtResource("9_25omh")
 label_settings = SubResource("LabelSettings_53wvu")
 
 [node name="RightPanel" type="Control" parent="GameUI" unique_id=1846232833]
 layout_mode = 3
+anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -144.0
+offset_top = 64.0
 offset_bottom = -64.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
 theme = ExtResource("9_25omh")
@@ -129,7 +157,7 @@ theme = ExtResource("9_25omh")
 [node name="PanelContainer" type="PanelContainer" parent="GameUI/RightPanel" unique_id=1889605545]
 layout_mode = 0
 offset_right = 144.0
-offset_bottom = 416.0
+offset_bottom = 352.0
 
 [node name="TopPanel" type="Control" parent="GameUI" unique_id=528150826]
 layout_mode = 3

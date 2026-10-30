@@ -7,7 +7,7 @@ const GRID_SIZE: int = 32
 
 @export var wall_scene 			: PackedScene
 @export var player				: CharacterBody2D
-@export var standard_grid_color : Color = Color(0.872, 2.0, 0.624, 1.0)
+@export var standard_grid_color : Color = Color(0.0, 1.656, 0.0, 1.0)
 @export var walled : bool 
 @export var body_enabled : bool
 
@@ -25,15 +25,15 @@ func _ready() -> void:
 	grid_height= game_area.grid_height
 	horizontal_grids = grid_width / GRID_SIZE
 	vertical_grids 	= grid_height / GRID_SIZE
-	if walled:
+	if walled == true:
 		create_walls()
 
-func _draw() -> void:
-	
-	for i in range(0,grid_width+1,GRID_SIZE): # vertical
-		draw_line(Vector2i(i,0),Vector2i(i,grid_height),vertical_color)
-	for i in range(0,grid_height+1,GRID_SIZE): # horizontal
-		draw_line(Vector2i(0,i),Vector2i(grid_width,i),horizontal_color)
+#func _draw() -> void:
+	#
+	#for i in range(0,grid_width+1,GRID_SIZE): # vertical
+		#draw_line(Vector2i(i,0),Vector2i(i,grid_height),vertical_color)
+	#for i in range(0,grid_height+1,GRID_SIZE): # horizontal
+		#draw_line(Vector2i(0,i),Vector2i(grid_width,i),horizontal_color)
 
 func create_walls() -> void:
 	for i in range(0,grid_width+1,GRID_SIZE): # vertical

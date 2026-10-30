@@ -14,6 +14,29 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmfcp"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gust0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8fgv"]
+
 [sub_resource type="DPITexture" id="DPITexture_5oplg"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#ff5d5d\" d=\"M2 1v8.586l1.293-1.293a1 1 0 0 1 1.414 0L7 10.587l2.293-2.293a1 1 0 0 1 1.414 0L13 10.586l1-1V6H9V1H2zm8 0v4h4zm-6 9.414-2 2V15h12v-2.586l-.293.293a1 1 0 0 1-1.414 0L10 10.414l-2.293 2.293a1 1 0 0 1-1.414 0L4 10.414z\"/></svg>
 "
@@ -31,11 +54,11 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="SystemFont" id="SystemFont_53wvu"]
+[sub_resource type="SystemFont" id="SystemFont_5oplg"]
 font_names = PackedStringArray("Elephant")
 
 [resource]
-default_font = SubResource("SystemFont_53wvu")
+default_font = SubResource("SystemFont_5oplg")
 default_font_size = 32
 Button/font_sizes/font_size = 32
 Button/styles/disabled_mirrored = SubResource("StyleBoxFlat_frhkx")
@@ -44,6 +67,14 @@ Button/styles/hover_pressed = SubResource("StyleBoxFlat_p8lu4")
 Button/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_5oplg")
 Button/styles/normal_mirrored = SubResource("StyleBoxFlat_ggf58")
 Button/styles/pressed_mirrored = SubResource("StyleBoxFlat_qmfcp")
+Label/colors/font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/styles/focus = SubResource("StyleBoxFlat_gust0")
+Label/styles/normal = SubResource("StyleBoxEmpty_u8fgv")
 PanelContainer/styles/panel = ExtResource("1_5oplg")
 RichTextLabel/colors/default_color = Color(0.34509805, 0.43529412, 0.34509805, 1)
 RichTextLabelTitle/base_type = &"RichTextLabel"

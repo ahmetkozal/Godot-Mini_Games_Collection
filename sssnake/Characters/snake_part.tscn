@@ -10,7 +10,10 @@ size = Vector2(32, 32)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tak5s"]
 shader = ExtResource("1_uuy33")
-shader_parameter/base_color = Color(1, 0, 1, 1)
+shader_parameter/base_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"shader_parameter/base_color": "53wvu"
+}
 
 [node name="SnakePart" type="Node2D" unique_id=1804810442]
 
