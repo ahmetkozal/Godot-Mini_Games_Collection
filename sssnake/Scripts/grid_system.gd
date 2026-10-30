@@ -9,6 +9,7 @@ const GRID_SIZE: int = 32
 @export var player				: CharacterBody2D
 @export var standard_grid_color : Color = Color(0.872, 2.0, 0.624, 1.0)
 @export var walled : bool 
+@export var body_enabled : bool
 
 var grid_width			: int
 var grid_height			: int
@@ -41,12 +42,12 @@ func create_walls() -> void:
 		wall_top.global_position = Vector2i(i,0)
 		var wall_bottom = wall_scene.instantiate()
 		walls.add_child(wall_bottom)
-		wall_bottom.global_position = Vector2i(i,grid_width)
+		wall_bottom.global_position = Vector2i(grid_width,i)
 	for i in range(0,grid_height+1,GRID_SIZE): # vertical
 		var wall_left = wall_scene.instantiate()
 		walls.add_child(wall_left)
 		wall_left.global_position = Vector2i(0,i)
 		var wall_right = wall_scene.instantiate()
 		walls.add_child(wall_right)
-		wall_right.global_position = Vector2i(grid_height,i)
+		wall_right.global_position = Vector2i(i,grid_height)
 		

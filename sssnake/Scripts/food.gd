@@ -14,7 +14,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	position = get_random_grid() * CELL_SIZE
 
 func get_random_int(range_int : int) -> int:
-	return randi_range(1,range_int -1)
+	return randi_range(0,range_int)
 
 func get_random_grid() -> Vector2i:
 	var rand_x : int = get_random_int(HORIZONTAL_GRIDS)

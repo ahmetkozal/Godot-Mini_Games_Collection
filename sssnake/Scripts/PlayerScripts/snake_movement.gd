@@ -21,7 +21,11 @@ var prev_dir 		: Vector2i
 var can_input 		: bool
 var grid_pos		: Vector2i
 var current_rot		: float
-var boost_enabled : bool = false
+var boost_enabled 	: bool = false
+var body_enabled 	: bool
+var wall_enabled 	: bool
+var max_x : int
+var max_y : int
 
 func _ready() -> void:
 	position 	= grid_system.grid_origin + Vector2(grid_system.horizontal_grids,grid_system.vertical_grids) /2 * CELL_SIZE
@@ -30,6 +34,10 @@ func _ready() -> void:
 	can_input 	= true
 	control_shiny_grids(dir)
 	grid_pos = position / CELL_SIZE
+	body_enabled = grid_system.body_enabled
+	wall_enabled = grid_system.walled
+	max_x = grid_system.horizontal_grids
+	max_y = grid_system.vertical_grids
 
 func _physics_process(delta: float) -> void:
 	var move_dir : Vector2i= get_dir()
@@ -37,6 +45,7 @@ func _physics_process(delta: float) -> void:
 		grid_pos += move_dir
 		position = grid_pos * CELL_SIZE
 		current_rot = Vector2(move_dir).angle()
+		teleport_in_grid()
 		head.global_rotation = current_rot
 		prev_dir = move_dir
 		can_input = true
@@ -78,6 +87,17 @@ func get_dir() -> Vector2i:
 		control_shiny_grids(dir)
 
 	return dir
+
+func teleport_in_grid() -> void:
+	if position.x < 0:
+		position.x = max_x * CELL_SIZE
+	elif position.x > max_x * CELL_SIZE:
+		position.x = 0
+	if position.y < 0:
+		position.y = max_y * CELL_SIZE 
+	elif position.y > max_y * CELL_SIZE:
+		position.y = 0
+	grid_pos = position / CELL_SIZE
 
 func log_grid() -> void:
 	grid_array.append(grid_pos)
@@ -124,5 +144,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	grow_snake.call_deferred()
 
 func _on_head_area_area_entered(area: Area2D) -> void:
-	if point > 1:
+	if point > 1 && body_enabled:
 		print(area.get_parent().name)
