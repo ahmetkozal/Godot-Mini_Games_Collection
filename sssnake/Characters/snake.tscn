@@ -45,6 +45,7 @@ texture = ExtResource("1_4b4a7")
 
 [node name="Polygon2D" type="Polygon2D" parent="HeadArea/Head" unique_id=1903486924]
 material = SubResource("ShaderMaterial_pm0dr")
+color = Color(0.46348572, 0.52734375, 0.4644835, 1)
 polygon = PackedVector2Array(-64, -64, -64, 64, -85.333336, 85.333336, -85.333336, -85.333336, -64, -64)
 metadata/_live_palette_bindings = {
 "color": "53wvu"

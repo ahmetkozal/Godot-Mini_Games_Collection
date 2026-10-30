@@ -28,12 +28,12 @@ func _ready() -> void:
 	if walled == true:
 		create_walls()
 
-#func _draw() -> void:
-	#
-	#for i in range(0,grid_width+1,GRID_SIZE): # vertical
-		#draw_line(Vector2i(i,0),Vector2i(i,grid_height),vertical_color)
-	#for i in range(0,grid_height+1,GRID_SIZE): # horizontal
-		#draw_line(Vector2i(0,i),Vector2i(grid_width,i),horizontal_color)
+func _draw() -> void:
+	
+	for i in range(0,grid_width+1,GRID_SIZE): # vertical
+		draw_line(Vector2i(i,0),Vector2i(i,grid_height),vertical_color)
+	for i in range(0,grid_height+1,GRID_SIZE): # horizontal
+		draw_line(Vector2i(0,i),Vector2i(grid_width,i),horizontal_color)
 
 func create_walls() -> void:
 	for i in range(0,grid_width+1,GRID_SIZE): # vertical

@@ -11,7 +11,7 @@ const MIN_K : float = 0.2
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 @onready var game_over_label: Label = $"../../GameUI/GameOverLabel"
 
-
+var empty_grids 	: Array[Vector2i] = []
 var grid_array 		: Array[Vector2i] = []
 var rotation_array	: Array[float] = []
 var parts			: Array[Node2D] = []
@@ -47,7 +47,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://UI/main_menu.tscn")
+		get_tree().change_scene_to_file("res://UI/snake_main_menu.tscn")
 		
 	if !dead:
 		var move_dir : Vector2i= get_dir()
@@ -163,6 +163,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	grow_snake.call_deferred()
 
 func _on_head_area_area_entered(area: Area2D) -> void:
-	if wall_enabled:
-		if area.get_collision_layer_value(4):
-			dead = true
+	if wall_enabled and area.get_collision_layer_value(4):
+		dead = true
+	if body_enabled and area.get_collision_layer_value(2):
+		dead = true

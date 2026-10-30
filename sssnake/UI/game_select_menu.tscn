@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bxfdcadqotykg"]
+
+[ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_ou7fs"]
+[ext_resource type="Script" uid="uid://b5adknyqlebof" path="res://Scripts/UIScripts/play_button.gd" id="2_0fvgw"]
+[ext_resource type="PackedScene" uid="uid://dmb7d0myae01h" path="res://UI/snake_main_menu.tscn" id="3_aac2m"]
+
+[node name="GameSelectMenu" type="Control" unique_id=415169616]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ou7fs")
+
+[node name="SSSnakeContainer" type="PanelContainer" parent="." unique_id=721449306]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = -240.0
+grow_vertical = 2
+theme = ExtResource("1_ou7fs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SSSnakeContainer" unique_id=254887962]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SSSnakeContainer/VBoxContainer" unique_id=960554887]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ou7fs")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[wave]SSSnake"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="PlaySnakeButton" type="Button" parent="SSSnakeContainer/VBoxContainer" unique_id=256850487]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+theme_override_font_sizes/font_size = 96
+text = "Play"
+flat = true
+script = ExtResource("2_0fvgw")
+level = ExtResource("3_aac2m")
+metadata/_live_palette_bindings = {
+"theme_override_colors/font_color": "53wvu"
+}
+
+[node name="PanelContainer2" type="PanelContainer" parent="." unique_id=1203772899]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_right = 640.0
+offset_bottom = -240.0
+grow_vertical = 2
+theme = ExtResource("1_ou7fs")
+
+[node name="PanelContainer3" type="PanelContainer" parent="." unique_id=1328302716]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 240.0
+offset_right = 320.0
+grow_vertical = 2
+theme = ExtResource("1_ou7fs")
+
+[node name="PanelContainer4" type="PanelContainer" parent="." unique_id=919422381]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = 240.0
+offset_right = 640.0
+grow_vertical = 2
+theme = ExtResource("1_ou7fs")
+
+[connection signal="pressed" from="SSSnakeContainer/VBoxContainer/PlaySnakeButton" to="SSSnakeContainer/VBoxContainer/PlaySnakeButton" method="_on_pressed"]

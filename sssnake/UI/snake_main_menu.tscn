@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b3kpkfchxmc0o" path="res://Scenes/NoWallScene.tscn" id="4_8ctay"]
 [ext_resource type="PackedScene" uid="uid://cjsu73767npmk" path="res://Scenes/WalledScene.tscn" id="5_ev3b6"]
 
-[node name="MainMenu" type="Control" unique_id=1934388370]
+[node name="SnakeMainMenu" type="Control" unique_id=1934388370]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

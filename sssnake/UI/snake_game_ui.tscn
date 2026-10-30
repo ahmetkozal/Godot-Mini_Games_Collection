@@ -1,0 +1,195 @@
+[gd_scene format=3 uid="uid://cbkcnykkolvtv"]
+
+[ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_jni1u"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
+font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_pm0dr"]
+font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_53wvu"]
+font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_qnuxe"]
+font_size = 96
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu",
+"outline_color": "0l7r1"
+}
+
+[node name="GameUI" type="CanvasLayer" unique_id=943015451]
+
+[node name="LeftPanel" type="Control" parent="." unique_id=1309069270]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 64.0
+offset_right = 144.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_jni1u")
+
+[node name="PanelContainer" type="PanelContainer" parent="LeftPanel" unique_id=2106240999]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 352.0
+
+[node name="ScoreAndMove" type="VBoxContainer" parent="LeftPanel/PanelContainer" unique_id=1444674017]
+layout_mode = 2
+
+[node name="ScoreVBox" type="VBoxContainer" parent="LeftPanel/PanelContainer/ScoreAndMove" unique_id=326975236]
+layout_mode = 2
+theme = ExtResource("1_jni1u")
+
+[node name="Score" type="Label" parent="LeftPanel/PanelContainer/ScoreAndMove/ScoreVBox" unique_id=1757125106]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_jni1u")
+text = "SCORE"
+label_settings = SubResource("LabelSettings_hb2xm")
+
+[node name="ScoreLabel" type="Label" parent="LeftPanel/PanelContainer/ScoreAndMove/ScoreVBox" unique_id=1666208392]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_jni1u")
+label_settings = SubResource("LabelSettings_hb2xm")
+
+[node name="MoveVBox" type="VBoxContainer" parent="LeftPanel/PanelContainer/ScoreAndMove" unique_id=1434229238]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_jni1u")
+alignment = 2
+
+[node name="MoveText" type="Label" parent="LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=1388425073]
+layout_mode = 2
+theme = ExtResource("1_jni1u")
+text = "MOVE"
+label_settings = SubResource("LabelSettings_pm0dr")
+horizontal_alignment = 1
+
+[node name="MoveNumber" type="Label" parent="LeftPanel/PanelContainer/ScoreAndMove/MoveVBox" unique_id=1071799693]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_jni1u")
+label_settings = SubResource("LabelSettings_53wvu")
+
+[node name="RightPanel" type="Control" parent="." unique_id=1864054543]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = 64.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+theme = ExtResource("1_jni1u")
+
+[node name="PanelContainer" type="PanelContainer" parent="RightPanel" unique_id=1866410416]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 352.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel/PanelContainer" unique_id=1139169674]
+layout_mode = 2
+
+[node name="TimeText" type="Label" parent="RightPanel/PanelContainer/VBoxContainer" unique_id=26750859]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "TIME"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RightPanel/PanelContainer/VBoxContainer" unique_id=1909559769]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TimeLabelMin" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=571484807]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TimeLabelSec" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1031432612]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TimeLabelMiniSec" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1998725343]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TopPanel" type="Control" parent="." unique_id=635821920]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+theme = ExtResource("1_jni1u")
+
+[node name="PanelContainer" type="PanelContainer" parent="TopPanel" unique_id=1012778396]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 64.0
+
+[node name="TitleLabel" type="RichTextLabel" parent="TopPanel/PanelContainer" unique_id=611072085]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 39
+bbcode_enabled = true
+text = "[wave]SSSnake"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomPanel" type="Control" parent="." unique_id=700146216]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource("1_jni1u")
+
+[node name="PanelContainer" type="PanelContainer" parent="BottomPanel" unique_id=1856647362]
+layout_mode = 0
+offset_top = 416.0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=869120252]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_qnuxe")
+horizontal_alignment = 1
+vertical_alignment = 1
