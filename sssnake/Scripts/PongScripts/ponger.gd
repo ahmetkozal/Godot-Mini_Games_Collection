@@ -6,6 +6,9 @@ extends CharacterBody2D
 const MOVE_SPEED : float 	= 400.0
 #const MAX_SPEED : float 	= 500.0
 
+func _ready() -> void:
+	print(Input.get_connected_joypads())
+
 func _physics_process(delta: float) -> void:
 	if is_player:
 		move_input()
@@ -13,17 +16,16 @@ func _physics_process(delta: float) -> void:
 		ai_input()
 	move_and_slide()
 
-
 func move_input() -> void:
 	var direction := 0.0
 	
 	# keyboard
 	if player_id == 0:
-		direction = Input.get_axis("up", "down")
+		direction = Input.get_axis("Player1Up", "Player1Down")
 	elif player_id == 1:
-		direction = Input.get_axis("ui_up", "ui_down")
+		direction = Input.get_axis("Player2Up", "Player2Down")
 
-	# gamepad
+	# gamepadsw
 	if Input.is_joy_button_pressed(player_id, JOY_BUTTON_DPAD_UP):
 		direction = -1.0
 	elif Input.is_joy_button_pressed(player_id, JOY_BUTTON_DPAD_DOWN):
