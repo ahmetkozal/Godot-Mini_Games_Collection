@@ -1,0 +1,316 @@
+[gd_scene format=3 uid="uid://du2pxnhyd1ica"]
+
+[ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_iko0n"]
+[ext_resource type="Script" uid="uid://c8jtvidnflgvb" path="res://Scripts/PongScripts/ponger.gd" id="2_6mn82"]
+[ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="2_8nxyt"]
+[ext_resource type="Texture2D" uid="uid://c885xu4ei8dt8" path="res://icon.svg" id="2_e0klk"]
+[ext_resource type="Shader" uid="uid://sog52o27s872" path="res://Shaders/wall.gdshader" id="5_4c4gb"]
+[ext_resource type="Script" uid="uid://yveax8gtftvu" path="res://Scripts/PongScripts/ball.gd" id="5_4e36o"]
+[ext_resource type="Script" uid="uid://b54bs5xfyr516" path="res://Scripts/PongScripts/timer.gd" id="7_quh8c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
+size = Vector2(512, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qt6nl"]
+size = Vector2(20, 336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnuxe"]
+size = Vector2(16, 96)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_53wvu"]
+shader = ExtResource("2_8nxyt")
+shader_parameter/base_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"shader_parameter/base_color": "53wvu"
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pm0dr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qt6nl"]
+shader = ExtResource("5_4c4gb")
+shader_parameter/base_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"shader_parameter/base_color": "53wvu"
+}
+
+[sub_resource type="SphereMesh" id="SphereMesh_pm0dr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_53wvu"]
+font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
+
+[node name="Pong" type="Node2D" unique_id=105340826]
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=899240976]
+offset_right = 640.0
+offset_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_iko0n")
+
+[node name="GameArea" type="Node2D" parent="." unique_id=1991036015]
+position = Vector2(320, 256)
+
+[node name="Walls" type="Node2D" parent="GameArea" unique_id=223985811]
+
+[node name="TopWall" type="StaticBody2D" parent="GameArea/Walls" unique_id=640742029]
+position = Vector2(0, -184)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/TopWall" unique_id=1684922460]
+shape = SubResource("RectangleShape2D_pm0dr")
+
+[node name="ColorRect" type="ColorRect" parent="GameArea/Walls/TopWall" unique_id=1329868408]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -8.0
+offset_right = 256.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"color": "53wvu"
+}
+
+[node name="BottomWall" type="StaticBody2D" parent="GameArea/Walls" unique_id=2021659478]
+position = Vector2(0, 184)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/BottomWall" unique_id=204976025]
+shape = SubResource("RectangleShape2D_pm0dr")
+
+[node name="ColorRect" type="ColorRect" parent="GameArea/Walls/BottomWall" unique_id=1392092829]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -8.0
+offset_right = 256.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"color": "53wvu"
+}
+
+[node name="Player1Gate" type="Area2D" parent="GameArea/Walls" unique_id=1579353104]
+position = Vector2(-240, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/Player1Gate" unique_id=780805113]
+shape = SubResource("RectangleShape2D_qt6nl")
+
+[node name="Player2Gate2" type="Area2D" parent="GameArea/Walls" unique_id=1147199154]
+position = Vector2(240, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/Player2Gate2" unique_id=249319916]
+shape = SubResource("RectangleShape2D_qt6nl")
+
+[node name="Player1" type="CharacterBody2D" parent="GameArea" unique_id=1905100096]
+position = Vector2(-168, 0)
+collision_mask = 12
+script = ExtResource("2_6mn82")
+is_player = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Player1" unique_id=1332455234]
+shape = SubResource("RectangleShape2D_qnuxe")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameArea/Player1" unique_id=590898693]
+material = SubResource("ShaderMaterial_53wvu")
+scale = Vector2(0.125, 0.75)
+texture = ExtResource("2_e0klk")
+
+[node name="Ball" type="CharacterBody2D" parent="GameArea" unique_id=580294229]
+script = ExtResource("5_4e36o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Ball" unique_id=312560787]
+shape = SubResource("CircleShape2D_pm0dr")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="GameArea/Ball" unique_id=620740994]
+material = SubResource("ShaderMaterial_qt6nl")
+position = Vector2(0, 1.9073486e-06)
+scale = Vector2(20.022678, 20.000004)
+mesh = SubResource("SphereMesh_pm0dr")
+
+[node name="Player2" type="CharacterBody2D" parent="GameArea" unique_id=396369158]
+position = Vector2(168, 0)
+collision_mask = 12
+script = ExtResource("2_6mn82")
+player_id = 1
+is_player = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Player2" unique_id=220623311]
+shape = SubResource("RectangleShape2D_qnuxe")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameArea/Player2" unique_id=1173711411]
+material = SubResource("ShaderMaterial_53wvu")
+scale = Vector2(0.125, 0.75)
+texture = ExtResource("2_e0klk")
+
+[node name="Timer" type="Timer" parent="GameArea" unique_id=1473542930]
+wait_time = 3.0
+one_shot = true
+autostart = true
+script = ExtResource("7_quh8c")
+
+[node name="PongGameUI" type="CanvasLayer" parent="." unique_id=313099294]
+
+[node name="TopControl" type="Control" parent="PongGameUI" unique_id=1626354299]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_right = 192.0
+offset_bottom = 64.0
+grow_horizontal = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_iko0n")
+
+[node name="PanelContainer" type="PanelContainer" parent="PongGameUI/TopControl" unique_id=511787109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PongGameUI/TopControl/PanelContainer" unique_id=2006468137]
+layout_mode = 2
+bbcode_enabled = true
+text = "[shake]Pong Pong Pong"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftControl" type="Control" parent="PongGameUI" unique_id=1098888831]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -240.0
+offset_right = 64.0
+offset_bottom = 240.0
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_iko0n")
+
+[node name="PanelContainer" type="PanelContainer" parent="PongGameUI/LeftControl" unique_id=1659511254]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PongGameUI/LeftControl/PanelContainer" unique_id=469499164]
+layout_mode = 2
+
+[node name="PointText" type="Label" parent="PongGameUI/LeftControl/PanelContainer/VBoxContainer" unique_id=334649970]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_iko0n")
+theme_override_font_sizes/font_size = 16
+text = "Point"
+
+[node name="LeftPointLabel" type="Label" parent="PongGameUI/LeftControl/PanelContainer/VBoxContainer" unique_id=37011780]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="RightControl" type="Control" parent="PongGameUI" unique_id=1059748052]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -240.0
+offset_bottom = 240.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_iko0n")
+
+[node name="PanelContainer" type="PanelContainer" parent="PongGameUI/RightControl" unique_id=220448305]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PongGameUI/RightControl/PanelContainer" unique_id=979171028]
+layout_mode = 2
+
+[node name="PointText" type="Label" parent="PongGameUI/RightControl/PanelContainer/VBoxContainer" unique_id=819513461]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_iko0n")
+theme_override_font_sizes/font_size = 16
+text = "Point"
+
+[node name="RightPointLabel" type="Label" parent="PongGameUI/RightControl/PanelContainer/VBoxContainer" unique_id=1861790864]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BottomControl" type="Control" parent="PongGameUI" unique_id=614582842]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -32.0
+offset_right = 192.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = ExtResource("1_iko0n")
+
+[node name="PanelContainer" type="PanelContainer" parent="PongGameUI/BottomControl" unique_id=1287736353]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimerLabel" type="Label" parent="PongGameUI" unique_id=97520944]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -48.0
+offset_right = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+label_settings = SubResource("LabelSettings_53wvu")
+horizontal_alignment = 1
+vertical_alignment = 1

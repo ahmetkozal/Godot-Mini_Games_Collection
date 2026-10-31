@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_ou7fs"]
 [ext_resource type="Script" uid="uid://b5adknyqlebof" path="res://Scripts/UIScripts/play_button.gd" id="2_0fvgw"]
 [ext_resource type="PackedScene" uid="uid://dmb7d0myae01h" path="res://UI/snake_main_menu.tscn" id="3_aac2m"]
+[ext_resource type="PackedScene" uid="uid://du2pxnhyd1ica" path="res://Scenes/pong.tscn" id="5_tk0r3"]
 
 [node name="GameSelectMenu" type="CanvasLayer" unique_id=1326553747]
 script = ExtResource("1_aac2m")
@@ -53,6 +54,34 @@ offset_bottom = -240.0
 grow_vertical = 2
 theme = ExtResource("1_ou7fs")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2" unique_id=549120581]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer2/VBoxContainer" unique_id=1929784982]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ou7fs")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[shake]Pong"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="PlaySnakeButton" type="Button" parent="PanelContainer2/VBoxContainer" unique_id=1761900441]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+theme_override_font_sizes/font_size = 96
+text = "Play"
+flat = true
+script = ExtResource("2_0fvgw")
+level = ExtResource("5_tk0r3")
+metadata/_live_palette_bindings = {
+"theme_override_colors/font_color": "53wvu"
+}
+
 [node name="PanelContainer3" type="PanelContainer" parent="." unique_id=1328302716]
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -71,3 +100,4 @@ grow_vertical = 2
 theme = ExtResource("1_ou7fs")
 
 [connection signal="pressed" from="SSSnakeContainer/VBoxContainer/PlaySnakeButton" to="SSSnakeContainer/VBoxContainer/PlaySnakeButton" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer2/VBoxContainer/PlaySnakeButton" to="PanelContainer2/VBoxContainer/PlaySnakeButton" method="_on_pressed"]
