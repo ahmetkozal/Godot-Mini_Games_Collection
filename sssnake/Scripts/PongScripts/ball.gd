@@ -1,15 +1,17 @@
 extends CharacterBody2D
 
+@export var paddle 	: CharacterBody2D
 
 const SPEED = 300.0
 
 var start_dir 	: Vector2 = Vector2.RIGHT
 var dir 		: Vector2
 var game_start 	: bool = false
+var paddle_height : float
 
 func _ready() -> void:
 	dir = start_dir.normalized()
-
+	
 func _physics_process(delta: float) -> void:
 	if game_start:
 		ball_move(dir.normalized())
