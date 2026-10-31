@@ -11,6 +11,7 @@ const MIN_K : float = 0.2
 @onready var CELL_SIZE 		: int = grid_system.GRID_SIZE
 @onready var game_over_label: Label = $"../../GameUI/GameOverLabel"
 
+var max_point		: int
 var empty_grids 	: Array[Vector2i] = []
 var grid_array 		: Array[Vector2i] = []
 var rotation_array	: Array[float] = []
@@ -44,6 +45,10 @@ func _ready() -> void:
 	wall_enabled = grid_system.walled
 	max_x = grid_system.horizontal_grids
 	max_y = grid_system.vertical_grids
+	if wall_enabled:
+		max_point = 64
+	else:
+		max_point = 81
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -133,6 +138,8 @@ func grow_snake() -> void:
 	body_parts.add_child(body_part)
 	body_part.global_position = grid_system.to_global(Vector2(grid_array[1] * CELL_SIZE))
 	parts.append(body_part)
+	if point >= max_point:
+		dead = true
 
 func update_part_pos() -> void:
 	for i in range(0,parts.size()):

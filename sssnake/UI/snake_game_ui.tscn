@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cbkcnykkolvtv"]
 
 [ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_jni1u"]
+[ext_resource type="Texture2D" uid="uid://057rjb186cw8" path="res://Assets/space.png" id="2_skcuc"]
+[ext_resource type="Texture2D" uid="uid://balk7e3ana3a3" path="res://Assets/wasd.png" id="3_682xo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hb2xm"]
 font_size = 32
@@ -20,6 +22,12 @@ metadata/_live_palette_bindings = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_53wvu"]
 font_size = 32
+font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
+metadata/_live_palette_bindings = {
+"font_color": "53wvu"
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_jni1u"]
 font_color = Color(0.46348572, 0.52734375, 0.4644835, 1)
 metadata/_live_palette_bindings = {
 "font_color": "53wvu"
@@ -131,14 +139,17 @@ size_flags_vertical = 4
 [node name="TimeLabelMin" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=571484807]
 layout_mode = 2
 size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_jni1u")
 
 [node name="TimeLabelSec" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1031432612]
 layout_mode = 2
 size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_jni1u")
 
 [node name="TimeLabelMiniSec" type="Label" parent="RightPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1998725343]
 layout_mode = 2
 size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_jni1u")
 
 [node name="TopPanel" type="Control" parent="." unique_id=635821920]
 layout_mode = 3
@@ -181,6 +192,60 @@ layout_mode = 0
 offset_top = 416.0
 offset_right = 640.0
 offset_bottom = 480.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomPanel/PanelContainer" unique_id=1947373769]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomPanel/PanelContainer/VBoxContainer" unique_id=905250071]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomPanel/PanelContainer/VBoxContainer/HBoxContainer" unique_id=2055111466]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="BottomPanel/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1013823612]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="BottomPanel/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=617012220]
+layout_mode = 2
+text = "to Move"
+
+[node name="Wasd" type="Sprite2D" parent="BottomPanel/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=1836574340]
+texture_filter = 1
+position = Vector2(174.99998, 27.999996)
+scale = Vector2(2.0624995, 2.0624995)
+texture = ExtResource("3_682xo")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="BottomPanel/PanelContainer" unique_id=65300879]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomPanel/PanelContainer/VBoxContainer2" unique_id=291280328]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomPanel/PanelContainer/VBoxContainer2/HBoxContainer" unique_id=1667962236]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="BottomPanel/PanelContainer/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=633087038]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Space" type="Sprite2D" parent="BottomPanel/PanelContainer/VBoxContainer2/HBoxContainer/VBoxContainer/PanelContainer" unique_id=3174405]
+texture_filter = 1
+position = Vector2(-40, 27)
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("2_skcuc")
+
+[node name="Label" type="Label" parent="BottomPanel/PanelContainer/VBoxContainer2/HBoxContainer/VBoxContainer/PanelContainer" unique_id=2056837578]
+layout_mode = 2
+text = "to Boos or Restart"
 
 [node name="GameOverLabel" type="Label" parent="." unique_id=869120252]
 visible = false
