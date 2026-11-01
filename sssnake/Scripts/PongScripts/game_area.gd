@@ -57,7 +57,7 @@ func restart_the_game() -> void:
 
 func restart_player(player : CharacterBody2D, default_pos : Vector2) -> void:
 	player.position = default_pos
-	#player.move_speed = player.DEFAULT_PADDLE_SPEED
+	player.move_speed = player.DEFAULT_PADDLE_SPEED
 
 func restart_ball(default_pos : Vector2) -> void:
 	#print("RESTART THE BALL")
