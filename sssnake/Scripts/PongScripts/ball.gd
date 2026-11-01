@@ -3,29 +3,27 @@ extends CharacterBody2D
 const BOUNCE_STR 		: float 	= 0.8 # aciyi yumusatmak icin
 const BALL_SPEED_K 		: float 	= 1.025
 const PADDLE_SPEED_K 	: float = 1.01
-const default_speed 	: float = 300.0
+const DEFAULT_SPEED 	: float = 300.0
 
-var speed 			: float = default_speed
+var speed 			: float = DEFAULT_SPEED
 var start_dir 		: Vector2 = Vector2.RIGHT
 var dir 			: Vector2
-var game_start 		: bool = false
 
 func _ready() -> void:
-	dir = start_dir.normalized()
+	dir = Vector2.RIGHT
+	speed = 0
 	
 func _physics_process(_delta: float) -> void:
-	if game_start:
-		ball_move()
-		
+	ball_move()
 	move_and_slide()
 	calc_collision()
 
 func ball_move() -> void:
 	velocity = speed * dir.normalized()
-	
+
 func _on_timer_timeout() -> void:
-	game_start = true
-	
+	print("GAME START")
+	speed = DEFAULT_SPEED
 
 func calc_collision() -> void:
 	for i in range(get_slide_collision_count()):
@@ -33,6 +31,7 @@ func calc_collision() -> void:
 		var collider = collision.get_collider()
 		if collider is CharacterBody2D:
 			if dir.dot(collision.get_normal()) < 0: # <0 means it is moving towards to the object
+				print("BOUNCED FROM PADDLE")
 				dir = bounce_from_paddle(collider)
 				speed *= BALL_SPEED_K
 				collider.move_speed *= PADDLE_SPEED_K

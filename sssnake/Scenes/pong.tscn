@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://du2pxnhyd1ica"]
 
 [ext_resource type="Theme" uid="uid://drrnrdu1ekf0y" path="res://UI/Themes/main_menu_theme.tres" id="1_iko0n"]
-[ext_resource type="Script" uid="uid://c8jtvidnflgvb" path="res://Scripts/PongScripts/ponger.gd" id="2_6mn82"]
+[ext_resource type="Script" uid="uid://bpinwvkh8o4ot" path="res://Scripts/PongScripts/game_area.gd" id="2_2yi6e"]
+[ext_resource type="Script" uid="uid://c8jtvidnflgvb" path="res://Scripts/PongScripts/paddle.gd" id="2_6mn82"]
 [ext_resource type="Shader" uid="uid://b6xa0kwwpnkcg" path="res://Shaders/snake_part_shader.gdshader" id="2_8nxyt"]
 [ext_resource type="Texture2D" uid="uid://c885xu4ei8dt8" path="res://icon.svg" id="2_e0klk"]
 [ext_resource type="Shader" uid="uid://sog52o27s872" path="res://Shaders/wall.gdshader" id="5_4c4gb"]
@@ -60,8 +61,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_iko0n")
 
-[node name="GameArea" type="Node2D" parent="." unique_id=1991036015]
+[node name="GameArea" type="Node2D" parent="." unique_id=1991036015 node_paths=PackedStringArray("timer", "timer_label", "ball", "paddle1", "paddle2", "player1_score_label", "player2_score_label")]
 position = Vector2(320, 256)
+script = ExtResource("2_2yi6e")
+timer = NodePath("Timer")
+timer_label = NodePath("../PongGameUI/TimerLabel")
+ball = NodePath("Ball")
+paddle1 = NodePath("Player1")
+paddle2 = NodePath("Player2")
+player1_score_label = NodePath("../PongGameUI/LeftControl/PanelContainer/VBoxContainer/LeftPointLabel")
+player2_score_label = NodePath("../PongGameUI/RightControl/PanelContainer/VBoxContainer/RightPointLabel")
 
 [node name="Walls" type="Node2D" parent="GameArea" unique_id=223985811]
 
@@ -117,12 +126,16 @@ metadata/_live_palette_bindings = {
 
 [node name="Player1Gate" type="Area2D" parent="GameArea/Walls" unique_id=1579353104]
 position = Vector2(-240, 0)
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/Player1Gate" unique_id=780805113]
 shape = SubResource("RectangleShape2D_2yi6e")
 
 [node name="Player2Gate2" type="Area2D" parent="GameArea/Walls" unique_id=1147199154]
 position = Vector2(240, 0)
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Walls/Player2Gate2" unique_id=249319916]
 shape = SubResource("RectangleShape2D_qt6nl")
@@ -146,7 +159,6 @@ position = Vector2(168, 0)
 collision_mask = 8
 script = ExtResource("2_6mn82")
 player_id = 1
-is_player = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Player2" unique_id=220623311]
 shape = SubResource("RectangleShape2D_quh8c")
@@ -244,6 +256,7 @@ text = "Point"
 [node name="LeftPointLabel" type="Label" parent="PongGameUI/LeftControl/PanelContainer/VBoxContainer" unique_id=37011780]
 layout_mode = 2
 size_flags_horizontal = 4
+text = "0"
 
 [node name="RightControl" type="Control" parent="PongGameUI" unique_id=1059748052]
 layout_mode = 3
@@ -282,6 +295,7 @@ text = "Point"
 [node name="RightPointLabel" type="Label" parent="PongGameUI/RightControl/PanelContainer/VBoxContainer" unique_id=1861790864]
 layout_mode = 2
 size_flags_horizontal = 4
+text = "0"
 
 [node name="BottomControl" type="Control" parent="PongGameUI" unique_id=614582842]
 layout_mode = 3
@@ -326,4 +340,6 @@ label_settings = SubResource("LabelSettings_53wvu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="body_entered" from="GameArea/Walls/Player1Gate" to="GameArea" method="_on_player_1_gate_body_entered"]
+[connection signal="body_entered" from="GameArea/Walls/Player2Gate2" to="GameArea" method="_on_player_2_gate_2_body_entered"]
 [connection signal="timeout" from="GameArea/Timer" to="GameArea/Ball" method="_on_timer_timeout"]
