@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="sssnake"
+config/name="Minigames Collection"
 run/main_scene="uid://bxfdcadqotykg"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
