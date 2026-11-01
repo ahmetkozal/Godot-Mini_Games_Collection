@@ -1,6 +1,6 @@
 extends Node2D
 
-const MAX_SCORE : int = 1
+const MAX_SCORE : int = 5
 
 @export var timer				: Timer
 @export var timer_label 		: Label
