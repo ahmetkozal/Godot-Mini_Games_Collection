@@ -24,7 +24,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ou7fs")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
 text = "[wave]SSSnake"
 scroll_active = false
@@ -62,12 +62,13 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ou7fs")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
 text = "[shake]Pong"
 scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlaySnakeButton" type="Button" parent="PongContainer/VBoxContainer" unique_id=1761900441]
 layout_mode = 2

@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 const BOUNCE_STR 		: float 	= 0.8 # aciyi yumusatmak icin
-const BALL_SPEED_K 		: float 	= 1.025
+const BALL_SPEED_K 		: float 	= 1.03
 const PADDLE_SPEED_K 	: float = 1.01
 const DEFAULT_SPEED 	: float = 300.0
+const MAX_SPEED_BALL 	: float = 1000.0
+const MAX_SPEED_PADDLE 	: float = 600.0
 
 var speed 			: float = DEFAULT_SPEED
 var start_dir 		: Vector2 = Vector2.RIGHT
@@ -22,7 +24,6 @@ func ball_move() -> void:
 	velocity = speed * dir.normalized()
 
 func _on_timer_timeout() -> void:
-	print("GAME START")
 	speed = DEFAULT_SPEED
 
 func calc_collision() -> void:
@@ -31,10 +32,9 @@ func calc_collision() -> void:
 		var collider = collision.get_collider()
 		if collider is CharacterBody2D:
 			if dir.dot(collision.get_normal()) < 0: # <0 means it is moving towards to the object
-				print("BOUNCED FROM PADDLE")
 				dir = bounce_from_paddle(collider)
-				speed *= BALL_SPEED_K
-				collider.move_speed *= PADDLE_SPEED_K
+				speed = clamp(speed * BALL_SPEED_K, 0.0, MAX_SPEED_BALL)
+				collider.move_speed = clamp(collider.move_speed * PADDLE_SPEED_K, 0.0, MAX_SPEED_PADDLE)
 		elif collider is StaticBody2D:
 			if dir.dot(collision.get_normal()) < 0: 
 				dir.y *= -1
@@ -61,8 +61,5 @@ func bounce_from_paddle(collider) -> Vector2:
 	dir.y = normalized * BOUNCE_STR
 	
 	bounce_dir = dir.normalized()
-	#print("Ball: ", position.y)
-	#print("Collision: ", collision.get_position().y)
-	#print("Paddle: ", collider.global_position.y)
 	
 	return bounce_dir
