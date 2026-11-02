@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nt3dl4j24kxg"
-path="res://.godot/imported/chest.png-77145657324cdba5a76624d750095cc1.ctex"
+uid="uid://vkcs1hovkyy2"
+path="res://.godot/imported/floor.png-d7ae7656ae56048391aff58eef8a0e43.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/bomber assets/chest.png"
-dest_files=["res://.godot/imported/chest.png-77145657324cdba5a76624d750095cc1.ctex"]
+source_file="res://Assets/bomber assets/floor.png"
+dest_files=["res://.godot/imported/floor.png-d7ae7656ae56048391aff58eef8a0e43.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c85ivp4eg536p"
-path="res://.godot/imported/stone.png-cd3dbe1be2f48a577fbf96a41549db70.ctex"
+uid="uid://nt3dl4j24kxg"
+path="res://.godot/imported/box.png-d21f0aedfcb4421255666c5bd4400f55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/bomber assets/stone.png"
-dest_files=["res://.godot/imported/stone.png-cd3dbe1be2f48a577fbf96a41549db70.ctex"]
+source_file="res://Assets/bomber assets/box.png"
+dest_files=["res://.godot/imported/box.png-d21f0aedfcb4421255666c5bd4400f55.ctex"]
 
 [params]
 
