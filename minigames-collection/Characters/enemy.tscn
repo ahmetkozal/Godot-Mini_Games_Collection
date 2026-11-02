@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://c2iprwg6vj8ql"]
+
+[ext_resource type="Texture2D" uid="uid://dktaqur16prne" path="res://Assets/bomber assets/enemy.png" id="1_04wy3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53wvu"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtu5t"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdfay"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpxx0"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tsq0"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04wy3"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gh648"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq3xi"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gd1y4"]
+atlas = ExtResource("1_04wy3")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e4l18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtu5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdfay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpxx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tsq0")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04wy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gh648")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq3xi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gd1y4")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1614994183]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1386956140]
+shape = SubResource("RectangleShape2D_53wvu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1620141816]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_e4l18")
+animation = &"walk"
+frame_progress = 0.1550205

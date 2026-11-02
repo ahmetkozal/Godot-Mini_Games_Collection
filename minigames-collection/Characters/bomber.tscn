@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://si3q0ntn72yf"]
 
+[ext_resource type="Script" uid="uid://b8i67foqbstc7" path="res://Scripts/BomberScripts/bomber.gd" id="1_ilsdo"]
 [ext_resource type="Texture2D" uid="uid://b1s0fdi72k1py" path="res://Assets/bomber assets/bomber.png" id="1_lbff6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53wvu"]
@@ -73,6 +74,7 @@ animations = [{
 }]
 
 [node name="bomber" type="CharacterBody2D" unique_id=1072318595]
+script = ExtResource("1_ilsdo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=7684665]
 shape = SubResource("RectangleShape2D_53wvu")
@@ -82,4 +84,4 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_53wvu")
 animation = &"idle"
-frame_progress = 0.038670566
+frame_progress = 0.024613647
