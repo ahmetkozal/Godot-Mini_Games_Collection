@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://si3q0ntn72yf"]
+
+[ext_resource type="Texture2D" uid="uid://b1s0fdi72k1py" path="res://Assets/bomber assets/bomber.png" id="1_lbff6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53wvu"]
+size = Vector2(16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilsdo"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb4nm"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbff6"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7pi7"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gabuq"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksaip"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_824tm"]
+atlas = ExtResource("1_lbff6")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_53wvu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilsdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb4nm")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbff6")
+}],
+"loop": 1,
+"name": &"put",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7pi7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gabuq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksaip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_824tm")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 11.0
+}]
+
+[node name="bomber" type="CharacterBody2D" unique_id=1072318595]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=7684665]
+shape = SubResource("RectangleShape2D_53wvu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1388536772]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_53wvu")
+animation = &"idle"
+frame_progress = 0.038670566
