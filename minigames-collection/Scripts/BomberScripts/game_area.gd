@@ -87,8 +87,8 @@ func spawn_enemies() -> void:
 			var enemy : Area2D = enemy_scene.instantiate()
 			var random_pos : Vector2i = available_for_enemy[randi_range(0,available_for_enemy.size()-1)]
 			#var random_pos : Vector2i = Vector2i(randi_range(i.position.x,i.end.x-1),randi_range(i.position.y,i.end.y-1))
-			enemies.add_child(enemy)
 			enemy.global_position = tile_map_to_global(random_pos)
+			enemies.add_child(enemy)
 			enemy_spawn_points.append(random_pos)
 
 

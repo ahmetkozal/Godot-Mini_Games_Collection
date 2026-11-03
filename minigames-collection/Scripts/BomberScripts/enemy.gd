@@ -3,35 +3,57 @@ extends Area2D
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
-const OFFSET 			: Vector2i = Vector2i(16,16)
 
 @onready var game_area = $"../.."
 
-const SPEED 		: float = 40.0
+const SPEED 		: float = 70.0
 const WAIT_TIME 	: float = 2.0
 
 var tile_map_layer 	: TileMapLayer
 var dir 			: Vector2i
 var current_cell 	: Vector2i
+var target_cell 	: Vector2i
+var dirs 			: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
 func _ready() -> void:
 	tile_map_layer = game_area.tile_map_layer
-	dir = Vector2i.DOWN
+	current_cell = game_area.pos_to_tile_map(global_position)
+	dir = get_new_dir()
+	target_cell = current_cell + dir
+
 
 func _physics_process(delta: float) -> void:
 	move(delta)
-	check_neighbour_cells()
 
-func move(dt: float) -> void:
-	global_position = global_position.move_toward(Vector2i.ZERO+OFFSET,SPEED * dt)
-	current_cell = game_area.pos_to_tile_map(global_position)
-
-func get_next_target() -> Vector2i:
-	var next_target: Vector2i
-	return next_target
-
-func check_neighbour_cells() -> void:
-	var next_cell : Vector2i = current_cell + dir
-	if tile_map_layer.get_cell_source_id(next_cell) == BOX_SOURCE_ID or tile_map_layer.get_cell_source_id(next_cell) == WALL_SOURCE_ID:
-		pass
+func move(dt:float) -> void: # move it
+	global_position = global_position.move_toward(game_area.tile_map_to_global(target_cell),SPEED*dt)
+	get_next_target()
 	
+func get_next_target() -> void: # will return next target after reaching the target
+	if global_position == game_area.tile_map_to_global(target_cell):
+		current_cell = game_area.pos_to_tile_map(global_position)
+		dir = get_new_dir()
+		target_cell += dir
+		
+
+func get_new_dir() -> Vector2i:
+	var available_neighbours 	: Array[Vector2i] = get_available_neighbours()
+	var new_dirs 				: Array[Vector2i]
+	if available_neighbours.size()>0:
+		for i in range(0,available_neighbours.size()):
+			if available_neighbours[i] != dir*-1:
+				new_dirs.append(available_neighbours[i])
+		if new_dirs.size()>0:
+			var random_index : int = randi_range(0,new_dirs.size()-1)
+			return new_dirs[random_index]
+		else:
+			return dir*-1
+	else:
+		return Vector2i.ZERO
+
+func get_available_neighbours() -> Array[Vector2i]:
+	var available_cells : Array[Vector2i]
+	for i in dirs:
+		if tile_map_layer.get_cell_source_id(current_cell+i) == FLOOR_SOURCE_ID:
+			available_cells.append(i)
+	return available_cells
