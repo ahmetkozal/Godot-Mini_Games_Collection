@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-
+@export var player_id : int
+@export var is_player : bool
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

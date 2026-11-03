@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://b8i67foqbstc7" path="res://Scripts/BomberScripts/bomber.gd" id="1_ilsdo"]
 [ext_resource type="Texture2D" uid="uid://b1s0fdi72k1py" path="res://Assets/bomber assets/bomber.png" id="1_lbff6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_53wvu"]
-size = Vector2(16, 32)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_53wvu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ilsdo"]
 atlas = ExtResource("1_lbff6")
@@ -74,10 +73,11 @@ animations = [{
 }]
 
 [node name="bomber" type="CharacterBody2D" unique_id=1072318595]
+collision_mask = 40
 script = ExtResource("1_ilsdo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=7684665]
-shape = SubResource("RectangleShape2D_53wvu")
+shape = SubResource("CapsuleShape2D_53wvu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1388536772]
 texture_filter = 1

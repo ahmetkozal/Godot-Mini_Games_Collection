@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bhdkthfkslv6v" path="res://Scripts/BomberScripts/game_area.gd" id="2_pxyj7"]
 [ext_resource type="Texture2D" uid="uid://nt3dl4j24kxg" path="res://Assets/bomber assets/box.png" id="2_rfy2f"]
 [ext_resource type="Texture2D" uid="uid://vkcs1hovkyy2" path="res://Assets/bomber assets/floor.png" id="3_8sgio"]
+[ext_resource type="PackedScene" uid="uid://c2iprwg6vj8ql" path="res://Characters/enemy.tscn" id="4_fsk4b"]
 [ext_resource type="Texture2D" uid="uid://c85ivp4eg536p" path="res://Assets/bomber assets/wall.png" id="4_pxyj7"]
 [ext_resource type="PackedScene" uid="uid://si3q0ntn72yf" path="res://Characters/bomber.tscn" id="5_8sgio"]
 
@@ -17,7 +18,6 @@ texture = ExtResource("2_rfy2f")
 resource_name = "floor"
 texture = ExtResource("3_8sgio")
 0:0/0 = 0
-0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qhri2"]
 resource_name = "wall"
@@ -46,6 +46,7 @@ theme = ExtResource("1_u5686")
 [node name="GameArea" type="Node2D" parent="." unique_id=1557973857]
 script = ExtResource("2_pxyj7")
 bomber_scene = ExtResource("5_8sgio")
+enemy_scene = ExtResource("4_fsk4b")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="GameArea" unique_id=1215335039]
 texture_filter = 1
@@ -57,8 +58,42 @@ tile_set = SubResource("TileSet_e4l18")
 
 [node name="players" type="Node2D" parent="GameArea" unique_id=1266685822]
 
-[node name="Bomber" parent="GameArea/players" unique_id=1072318595 instance=ExtResource("5_8sgio")]
+[node name="bomber" parent="GameArea/players" unique_id=1072318595 instance=ExtResource("5_8sgio")]
+modulate = Color(1, 0.73828125, 0.73828125, 1)
+self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(48, 48)
+is_player = true
+metadata/_live_palette_bindings = {
+"modulate": "p8lu4",
+"self_modulate": "p8lu4"
+}
 
-[node name="Bomber2" parent="GameArea/players" unique_id=1423784217 instance=ExtResource("5_8sgio")]
-position = Vector2(48, 48)
+[node name="bomber2" parent="GameArea/players" unique_id=1473590253 instance=ExtResource("5_8sgio")]
+modulate = Color(1, 0.73828125, 0.73828125, 1)
+self_modulate = Color(1, 0.73828125, 0.73828125, 1)
+position = Vector2(592, 48)
+player_id = 1
+metadata/_live_palette_bindings = {
+"modulate": "p8lu4",
+"self_modulate": "p8lu4"
+}
+
+[node name="bomber3" parent="GameArea/players" unique_id=1422557274 instance=ExtResource("5_8sgio")]
+modulate = Color(1, 0.73828125, 0.73828125, 1)
+self_modulate = Color(1, 0.73828125, 0.73828125, 1)
+position = Vector2(48, 432)
+player_id = 2
+metadata/_live_palette_bindings = {
+"modulate": "p8lu4",
+"self_modulate": "p8lu4"
+}
+
+[node name="bomber4" parent="GameArea/players" unique_id=1875605946 instance=ExtResource("5_8sgio")]
+modulate = Color(1, 0.73828125, 0.73828125, 1)
+self_modulate = Color(1, 0.73828125, 0.73828125, 1)
+position = Vector2(592, 432)
+player_id = 3
+metadata/_live_palette_bindings = {
+"modulate": "p8lu4",
+"self_modulate": "p8lu4"
+}

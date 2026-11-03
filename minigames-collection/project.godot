@@ -104,6 +104,7 @@ Player1Down={
 2d_physics/layer_3="food / ball"
 2d_physics/layer_4="wall"
 2d_physics/layer_6="box"
+2d_physics/layer_7="enemy"
 
 [physics]
 
