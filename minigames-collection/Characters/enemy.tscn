@@ -90,5 +90,3 @@ sprite_frames = SubResource("SpriteFrames_e4l18")
 animation = &"idle"
 frame = 2
 frame_progress = 0.8608471
-
-[connection signal="timeout" from="." to="." method="_on_timeout"]

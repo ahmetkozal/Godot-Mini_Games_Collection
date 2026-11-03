@@ -1,6 +1,6 @@
 extends Area2D
 
-signal timeout
+#signal timeout
 
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1

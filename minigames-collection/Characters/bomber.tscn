@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://b8i67foqbstc7" path="res://Scripts/BomberScripts/bomber.gd" id="1_ilsdo"]
 [ext_resource type="Texture2D" uid="uid://b1s0fdi72k1py" path="res://Assets/bomber assets/bomber.png" id="1_lbff6"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_53wvu"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p8lu4"]
+size = Vector2(8, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ilsdo"]
 atlas = ExtResource("1_lbff6")
@@ -78,11 +79,11 @@ collision_mask = 40
 script = ExtResource("1_ilsdo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=7684665]
-shape = SubResource("CapsuleShape2D_53wvu")
+shape = SubResource("RectangleShape2D_p8lu4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1388536772]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_53wvu")
 animation = &"idle"
 frame_progress = 0.024613647
