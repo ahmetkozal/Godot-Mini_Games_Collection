@@ -59,8 +59,6 @@ tile_set = SubResource("TileSet_e4l18")
 [node name="players" type="Node2D" parent="GameArea" unique_id=1266685822]
 
 [node name="bomber" parent="GameArea/players" unique_id=1072318595 instance=ExtResource("5_8sgio")]
-modulate = Color(1, 0.73828125, 0.73828125, 1)
-self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(48, 48)
 is_player = true
 metadata/_live_palette_bindings = {

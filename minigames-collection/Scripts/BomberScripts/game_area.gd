@@ -4,7 +4,7 @@ const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
 
-const SAFE_ZONE_R 		: int = 1
+const SAFE_ZONE_R 		: int = 2
 const BOX_CHANCE		: float = 0.45
 const BOMB_UP_CHANCE 	: float = 0.1
 const FIRE_UP_CHANCE 	: float = 0.15
@@ -66,15 +66,15 @@ func get_floor_cells() -> void:
 
 func set_up_enemy_spawn_areas() -> void:
 	enemy_spawn_areas.append(Rect2i(Vector2i(1,3),Vector2i(7,3)))
-	#enemy_spawn_areas.append(Rect2i(Vector2i(1,6),Vector2i(7,3)))
-	#enemy_spawn_areas.append(Rect2i(Vector2i(1,9),Vector2i(7,3)))
-	#
-	#enemy_spawn_areas.append(Rect2i(Vector2i(11,3),Vector2i(7,3)))
-	#enemy_spawn_areas.append(Rect2i(Vector2i(11,6),Vector2i(7,3)))
-	#enemy_spawn_areas.append(Rect2i(Vector2i(11,9),Vector2i(7,3)))
-	#
-	#enemy_spawn_areas.append(Rect2i(Vector2i(9,1),Vector2i(1,13)))
-	#enemy_spawn_areas.append(Rect2i(Vector2i(10,1),Vector2i(1,13)))
+	enemy_spawn_areas.append(Rect2i(Vector2i(1,6),Vector2i(7,3)))
+	enemy_spawn_areas.append(Rect2i(Vector2i(1,9),Vector2i(7,3)))
+	
+	enemy_spawn_areas.append(Rect2i(Vector2i(11,3),Vector2i(7,3)))
+	enemy_spawn_areas.append(Rect2i(Vector2i(11,6),Vector2i(7,3)))
+	enemy_spawn_areas.append(Rect2i(Vector2i(11,9),Vector2i(7,3)))
+	
+	enemy_spawn_areas.append(Rect2i(Vector2i(9,1),Vector2i(1,13)))
+	enemy_spawn_areas.append(Rect2i(Vector2i(10,1),Vector2i(1,13)))
 
 func spawn_enemies() -> void:
 	for i : Rect2i in enemy_spawn_areas:

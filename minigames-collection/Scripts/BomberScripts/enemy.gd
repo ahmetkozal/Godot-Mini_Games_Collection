@@ -1,14 +1,20 @@
 extends Area2D
 
+signal timeout
+
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
+const SPEED 			: float = 50.0
+const WAIT_TIME 		: float = 1.0
+const PATROL_DISTANCE 	: int = 5
 
 @onready var game_area = $"../.."
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-const SPEED 		: float = 70.0
-const WAIT_TIME 	: float = 2.0
-
+var remaining_cell 	: int
+var can_move 		: bool = true
+var time 			: float = 0.0
 var tile_map_layer 	: TileMapLayer
 var dir 			: Vector2i
 var current_cell 	: Vector2i
@@ -16,6 +22,7 @@ var target_cell 	: Vector2i
 var dirs 			: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
 func _ready() -> void:
+	remaining_cell = PATROL_DISTANCE
 	tile_map_layer = game_area.tile_map_layer
 	current_cell = game_area.pos_to_tile_map(global_position)
 	dir = get_new_dir()
@@ -23,13 +30,22 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if dir == Vector2i.LEFT:
+		animated_sprite_2d.flip_h = true
+	if dir == Vector2i.RIGHT:
+		animated_sprite_2d.flip_h = false
+		
 	move(delta)
 
 func move(dt:float) -> void: # move it
-	global_position = global_position.move_toward(game_area.tile_map_to_global(target_cell),SPEED*dt)
-	get_next_target()
+	if can_move:
+		global_position = global_position.move_toward(game_area.tile_map_to_global(target_cell),SPEED*dt)
+		animated_sprite_2d.play("walk")
+	else:
+		animated_sprite_2d.play("idle")
+	get_next_target(dt)
 	
-func get_next_target() -> void: # will return next target after reaching the target
+func get_next_target(_dt: float) -> void: # will return next target after reaching the target
 	if global_position == game_area.tile_map_to_global(target_cell):
 		current_cell = game_area.pos_to_tile_map(global_position)
 		dir = get_new_dir()
@@ -57,3 +73,8 @@ func get_available_neighbours() -> Array[Vector2i]:
 		if tile_map_layer.get_cell_source_id(current_cell+i) == FLOOR_SOURCE_ID:
 			available_cells.append(i)
 	return available_cells
+	
+
+
+func _on_timeout() -> void:
+	pass # Replace with function body.
