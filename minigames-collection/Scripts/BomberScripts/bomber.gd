@@ -1,22 +1,32 @@
 extends CharacterBody2D
 
-const SPEED : float = 60.0
+@onready var game_area: GameArea = $"../.."
 
 @export var player_id : int
 @export var is_player : bool
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
+const SPEED : float = 60.0
+const DEFAULT_BOMB_COOLDOWN: float = 4.0
+
+var current_cell : Vector2i
+
+func _ready():
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	safe_margin = 0.1
+	max_slides = 10
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta: float) -> void:
 	if is_player:
 		velocity = get_dir_and_move(player_id) * SPEED
-		print(velocity)
+		if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
+			print("BOMBED")
+			bomb()
 	else:
 		ai_move(player_id)
 	move_and_slide()
+	current_cell = game_area.pos_to_tile_map(global_position)
+	
 
 func get_dir_and_move(id : int) -> Vector2i:
 	var desired_dir : Vector2i = Vector2i.ZERO
@@ -31,7 +41,7 @@ func get_dir_and_move(id : int) -> Vector2i:
 		desired_dir = Vector2i.DOWN
 	return desired_dir
 
-func center_bomber() -> void:
+func bomb():
 	pass
 
 func ai_move(id : int):

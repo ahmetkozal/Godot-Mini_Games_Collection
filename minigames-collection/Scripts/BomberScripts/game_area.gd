@@ -1,3 +1,4 @@
+class_name GameArea
 extends Node2D
 
 const BOX_SOURCE_ID 	: int = 0
@@ -42,7 +43,9 @@ func _ready() -> void:
 	set_up_available_cells()
 	place_boxes()
 
-	
+func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().change_scene_to_file("res://UI/game_select_menu.tscn")
 
 #func instantiate_players() -> void:
 	#for i in range(0,player_count):
@@ -114,9 +117,6 @@ func place_boxes() -> void: # Places boxes randomly at available cells
 
 func place_powerups() -> void:
 	pass
-
-
-
 
 # Converts a global position (world coordinates) into TileMapLayer cell coordinates.
 # First transforms the position into the TileMapLayer's local coordinate space,
