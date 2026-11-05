@@ -66,11 +66,12 @@ func put_bomb():
 		bombs.add_child(bomba)
 		game_area.bomb_cells.append(current_cell)
 		bomb_count += 1
+		bomb.game_area = game_area
 
 func die()->void:
 	var self_index : int = game_area.bombers_arr.find(self)
 	if self_index >-1:
-		game_area.bombers_arr.remove_at(game_area.bombers_arr.find(self))
+		game_area.bombers_arr.remove_at(self_index)
 	queue_free()
 
 func ai_move(id : int):

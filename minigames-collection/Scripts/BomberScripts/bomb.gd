@@ -9,6 +9,7 @@ const EXPLOSION = preload("res://Objects/bomber/explosion.tscn")
 @onready var animations: Node2D = $animations
 @onready var timer: Timer = $Timer
 
+var game_area 				: GameArea
 var dirs 					: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 var bomber 					: CharacterBody2D
 var cell 					: Vector2i
@@ -28,7 +29,7 @@ func _ready() -> void:
 func set_and_get_explosion_area() -> Array[Vector2i]:
 	var explosion_range_array : Array[Vector2i]
 	explosion_range = bomber.explosion_range
-	center_explosion_anim = add_animation(Vector2i.ZERO,explosion_range_array,CENTER_EXPLOSION,position,cell)
+	center_explosion_anim = add_animation(Vector2i.ZERO,explosion_range_array,CENTER_EXPLOSION,global_position,cell)
 	for i in dirs:
 		for x in range(1,explosion_range+1):
 			var explosion_cell : Vector2i = cell+i*x
