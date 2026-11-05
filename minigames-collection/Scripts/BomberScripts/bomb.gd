@@ -19,7 +19,7 @@ var center_explosion_anim 	: AnimatedSprite2D
 var cells_to_damage 		: Array[Vector2i]
 
 func _ready() -> void:
-	tile_map_layer = bomber.game_area.tile_map_layer
+	tile_map_layer = game_area.tile_map_layer
 	timer.wait_time = bomber.bomb_timer
 	timer.start()
 	cell = bomber.current_cell

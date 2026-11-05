@@ -63,10 +63,11 @@ func put_bomb():
 		var bomba : Node2D = bomb.instantiate()
 		bomba.bomber = self
 		bomba.global_position = game_area.tile_map_to_global(current_cell)
+		bomba.game_area = game_area
 		bombs.add_child(bomba)
 		game_area.bomb_cells.append(current_cell)
 		bomb_count += 1
-		bomb.game_area = game_area
+		
 
 func die()->void:
 	var self_index : int = game_area.bombers_arr.find(self)
