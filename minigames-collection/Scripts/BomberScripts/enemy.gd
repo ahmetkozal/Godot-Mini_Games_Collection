@@ -9,6 +9,7 @@ const SPEED 			: float = 50.0
 const WAIT_TIME 		: float = 1.0
 const PATROL_DISTANCE 	: int = 5
 
+
 @onready var game_area = $"../.."
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -58,7 +59,8 @@ func get_new_dir() -> Vector2i:
 	if available_neighbours.size()>0:
 		for i in range(0,available_neighbours.size()):
 			if available_neighbours[i] != dir*-1:
-				new_dirs.append(available_neighbours[i])
+				if current_cell+available_neighbours[i] not in game_area.bomb_cells:
+					new_dirs.append(available_neighbours[i])
 		if new_dirs.size()>0:
 			var random_index : int = randi_range(0,new_dirs.size()-1)
 			return new_dirs[random_index]

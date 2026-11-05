@@ -26,6 +26,7 @@ var available_cells 	: Array[Vector2i]
 var floor_cells 		: Array[Vector2i]
 var box_cells 			: Array[Vector2i]
 var power_up_cells 		: Array[Vector2i]
+var bomb_cells 			: Array[Vector2i]
 
 var rng 				: RandomNumberGenerator = RandomNumberGenerator.new()
 

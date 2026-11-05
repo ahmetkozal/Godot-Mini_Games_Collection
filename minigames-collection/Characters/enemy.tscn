@@ -77,7 +77,7 @@ animations = [{
 [node name="Enemy" type="Area2D" unique_id=75248672]
 texture_filter = 1
 collision_layer = 64
-collision_mask = 42
+collision_mask = 170
 script = ExtResource("1_rtu5t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1386956140]

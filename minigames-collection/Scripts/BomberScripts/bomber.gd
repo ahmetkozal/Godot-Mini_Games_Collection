@@ -1,14 +1,19 @@
 extends CharacterBody2D
 
 @onready var game_area: GameArea = $"../.."
+@onready var bombs: Node2D = $"../../bombs"
 
+@export var bomb : PackedScene
 @export var player_id : int
 @export var is_player : bool
 
-const SPEED : float = 60.0
-const DEFAULT_BOMB_COOLDOWN: float = 4.0
+const SPEED 					: float = 60.0
 
-var current_cell : Vector2i
+var current_cell 	: Vector2i
+var max_bombs 		: int = 1
+var bomb_count 		: int = 0
+var bomb_timer 		: float = 3.0
+var explosion_range : int = 1
 
 func _ready():
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
@@ -21,7 +26,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = get_dir_and_move(player_id) * SPEED
 		if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
 			print("BOMBED")
-			bomb()
+			put_bomb()
 	else:
 		ai_move(player_id)
 	move_and_slide()
@@ -41,8 +46,15 @@ func get_dir_and_move(id : int) -> Vector2i:
 		desired_dir = Vector2i.DOWN
 	return desired_dir
 
-func bomb():
-	pass
+func put_bomb():
+	if bomb_count < max_bombs:
+		var bomba : Node2D = bomb.instantiate()
+		bomba.bomber = self
+		bomba.global_position = game_area.tile_map_to_global(current_cell)
+		bombs.add_child(bomba)
+		game_area.bomb_cells.append(current_cell)
+		bomb_count += 1
+		print(game_area.bomb_cells)
 
 func ai_move(id : int):
 	pass

@@ -235,6 +235,7 @@ bomber3bomb={
 2d_physics/layer_4="wall"
 2d_physics/layer_6="box"
 2d_physics/layer_7="enemy"
+2d_physics/layer_8="bomb"
 
 [physics]
 
