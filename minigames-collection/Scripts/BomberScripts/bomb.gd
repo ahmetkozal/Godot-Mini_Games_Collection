@@ -28,7 +28,7 @@ func _ready() -> void:
 func set_and_get_explosion_area() -> Array[Vector2i]:
 	var explosion_range_array : Array[Vector2i]
 	explosion_range = bomber.explosion_range
-	center_explosion_anim = add_animation(Vector2i.ZERO,explosion_range_array,CENTER_EXPLOSION,position,position)
+	center_explosion_anim = add_animation(Vector2i.ZERO,explosion_range_array,CENTER_EXPLOSION,position,cell)
 	for i in dirs:
 		for x in range(1,explosion_range+1):
 			var explosion_cell : Vector2i = cell+i*x
@@ -51,11 +51,21 @@ func add_animation(dir : Vector2i,explosion_range_array : Array[Vector2i],explos
 	return explosion_anim
 
 func explode() -> void:
+	for i in cells_to_damage:
+		if tile_map_layer.get_cell_source_id(i) == BOX_SOURCE_ID:
+			bomber.game_area.tile_map_layer.set_cell(i,FLOOR_SOURCE_ID,Vector2i(0,0))
+	kill_in_area(bomber.game_area.bombers_arr)
+	kill_in_area(bomber.game_area.enemies_arr)
 	for i in animations.get_children():
 		i.play()
 
 func exploded() ->void:
 	queue_free()
+
+func kill_in_area(chararcter_arr : Array):
+	for i in chararcter_arr:
+		if i.current_cell in cells_to_damage:
+			i.dead=true
 
 func _on_timer_timeout() -> void:
 	var bomb_index : int = bomber.game_area.bomb_cells.find(cell)

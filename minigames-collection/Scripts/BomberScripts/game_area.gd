@@ -27,12 +27,14 @@ var floor_cells 		: Array[Vector2i]
 var box_cells 			: Array[Vector2i]
 var power_up_cells 		: Array[Vector2i]
 var bomb_cells 			: Array[Vector2i]
+var enemies_arr 		: Array[Area2D]
+var bombers_arr 		: Array[CharacterBody2D]
+
 
 var rng 				: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	game_area = tile_map_layer.get_used_rect()
-	print(game_area)
 	
 	# setting up game area
 	rng.randomize()
@@ -94,6 +96,7 @@ func spawn_enemies() -> void:
 			enemy.global_position = tile_map_to_global(random_pos)
 			enemies.add_child(enemy)
 			enemy_spawn_points.append(random_pos)
+			
 
 
 func create_enemy_safe_zones() -> void:

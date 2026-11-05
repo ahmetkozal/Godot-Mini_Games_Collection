@@ -13,6 +13,7 @@ const PATROL_DISTANCE 	: int = 5
 @onready var game_area = $"../.."
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
+var dead 			: bool
 var remaining_cell 	: int
 var can_move 		: bool = true
 var time 			: float = 0.0
@@ -23,20 +24,27 @@ var target_cell 	: Vector2i
 var dirs 			: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
 func _ready() -> void:
-	remaining_cell = PATROL_DISTANCE
-	tile_map_layer = game_area.tile_map_layer
-	current_cell = game_area.pos_to_tile_map(global_position)
-	dir = get_new_dir()
-	target_cell = current_cell + dir
+	dead 			= false
+	remaining_cell 	= PATROL_DISTANCE
+	tile_map_layer 	= game_area.tile_map_layer
+	current_cell 	= game_area.pos_to_tile_map(global_position)
+	dir				 = get_new_dir()
+	target_cell 	= current_cell + dir
+	game_area.enemies_arr.append(self)
 
 
 func _physics_process(delta: float) -> void:
-	if dir == Vector2i.LEFT:
-		animated_sprite_2d.flip_h = true
-	if dir == Vector2i.RIGHT:
-		animated_sprite_2d.flip_h = false
-		
-	move(delta)
+	if dead:
+		var self_index : int = game_area.enemies_arr.find(self)
+		if self_index >-1:
+			game_area.enemies_arr.remove_at(self_index)
+		queue_free()
+	else:
+		if dir == Vector2i.LEFT:
+			animated_sprite_2d.flip_h = true
+		if dir == Vector2i.RIGHT:
+			animated_sprite_2d.flip_h = false
+		move(delta)
 
 func move(dt:float) -> void: # move it
 	if can_move:
@@ -75,8 +83,6 @@ func get_available_neighbours() -> Array[Vector2i]:
 		if tile_map_layer.get_cell_source_id(current_cell+i) == FLOOR_SOURCE_ID:
 			available_cells.append(i)
 	return available_cells
-	
 
-
-func _on_timeout() -> void:
-	pass # Replace with function body.
+func _on_body_entered(body: Node2D) -> void:
+	body.die()

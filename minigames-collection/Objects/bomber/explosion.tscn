@@ -62,3 +62,5 @@ animations = [{
 [node name="Explosion" type="AnimatedSprite2D" unique_id=547562867]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_pm0dr")
+frame = 6
+frame_progress = 1.0

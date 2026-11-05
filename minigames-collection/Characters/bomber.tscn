@@ -76,7 +76,7 @@ animations = [{
 
 [node name="bomber" type="CharacterBody2D" unique_id=1072318595]
 texture_filter = 1
-collision_mask = 168
+collision_mask = 232
 script = ExtResource("1_ilsdo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=7684665]
@@ -87,4 +87,4 @@ texture_filter = 1
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_53wvu")
 animation = &"idle"
-frame_progress = 0.024613647
+frame_progress = 0.28898135

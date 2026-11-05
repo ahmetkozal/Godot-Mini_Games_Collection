@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
-@onready var game_area: GameArea = $"../.."
-@onready var bombs: Node2D = $"../../bombs"
+@onready var game_area	: GameArea = $"../.."
+@onready var bombs		: Node2D = $"../../bombs"
+@onready var anim 		: AnimatedSprite2D = $AnimatedSprite2D
 
 @export var bomb : PackedScene
 @export var player_id : int
@@ -9,37 +10,48 @@ extends CharacterBody2D
 
 const SPEED 					: float = 60.0
 
+var dead 			: bool
 var current_cell 	: Vector2i
 var max_bombs 		: int = 1
 var bomb_count 		: int = 0
 var bomb_timer 		: float = 3.0
-var explosion_range : int = 1
+var explosion_range : int = 2
 
 func _ready():
+	dead = false
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	safe_margin = 0.1
 	max_slides = 10
+	game_area.bombers_arr.append(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta: float) -> void:
-	if is_player:
-		velocity = get_dir_and_move(player_id) * SPEED
-		if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
-			print("BOMBED")
-			put_bomb()
+	if dead:
+		die()
+		return
 	else:
-		ai_move(player_id)
-	move_and_slide()
-	current_cell = game_area.pos_to_tile_map(global_position)
-	
+		if is_player:
+			velocity = get_dir_and_move(player_id) * SPEED
+			if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
+				put_bomb()
+		else:
+			ai_move(player_id)
+		move_and_slide()
+		current_cell = game_area.pos_to_tile_map(global_position)
+		if velocity == Vector2.ZERO:
+			anim.play("idle")
+		else:
+			anim.play("walk")
 
 func get_dir_and_move(id : int) -> Vector2i:
 	var desired_dir : Vector2i = Vector2i.ZERO
 	#dir =  Input.get_vector("bomber"+str(id)+"left","bomber"+str(id)+"right","bomber"+str(id)+"up","bomber"+str(id)+"down")
 	if Input.is_action_pressed("bomber"+str(id)+"left"):
 		desired_dir = Vector2i.LEFT
+		anim.flip_h = true
 	if Input.is_action_pressed("bomber"+str(id)+"right"):
 		desired_dir = Vector2i.RIGHT
+		anim.flip_h = false
 	if Input.is_action_pressed("bomber"+str(id)+"up"):
 		desired_dir = Vector2i.UP
 	if Input.is_action_pressed("bomber"+str(id)+"down"):
@@ -54,7 +66,12 @@ func put_bomb():
 		bombs.add_child(bomba)
 		game_area.bomb_cells.append(current_cell)
 		bomb_count += 1
-		print(game_area.bomb_cells)
+
+func die()->void:
+	var self_index : int = game_area.bombers_arr.find(self)
+	if self_index >-1:
+		game_area.bombers_arr.remove_at(game_area.bombers_arr.find(self))
+	queue_free()
 
 func ai_move(id : int):
 	pass
