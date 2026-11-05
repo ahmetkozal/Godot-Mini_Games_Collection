@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://c8k5otx6l58ma"]
+
+[ext_resource type="Texture2D" uid="uid://bycqke7bfr5md" path="res://Assets/bomber assets/center_explosion.png" id="1_jqdsp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_338hs"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rd38"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1drm"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3l3l"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvbrk"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_in1g2"]
+atlas = ExtResource("1_jqdsp")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_53wvu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_338hs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rd38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1drm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3l3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvbrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in1g2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in1g2")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="CenterExplosion" type="AnimatedSprite2D" unique_id=158369492]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_53wvu")
+frame = 6
+frame_progress = 1.0

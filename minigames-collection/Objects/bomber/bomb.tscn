@@ -13,4 +13,6 @@ texture = ExtResource("1_0uecc")
 [node name="Timer" type="Timer" parent="." unique_id=994152033]
 wait_time = 3.0
 
+[node name="animations" type="Node2D" parent="." unique_id=938534049]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bbensv2doy3r6"]
+
+[ext_resource type="Texture2D" uid="uid://bx1tt2fgewwxi" path="res://Assets/bomber assets/fire.png" id="1_wmbc6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so7ta"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pumsc"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hpqw"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6nv0"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwt8h"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u05s6"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok5hk"]
+atlas = ExtResource("1_wmbc6")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pm0dr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so7ta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pumsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hpqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6nv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwt8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u05s6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok5hk")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D" unique_id=547562867]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_pm0dr")
