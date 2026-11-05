@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const BOX_EXPLOSION = preload("res://Objects/bomber/box_explosion.tscn")
+
 @onready var game_area	: GameArea = $"../.."
 @onready var bombs		: Node2D = $"../../bombs"
 @onready var anim 		: AnimatedSprite2D = $AnimatedSprite2D
@@ -14,7 +16,6 @@ var dead 			: bool
 var current_cell 	: Vector2i
 var max_bombs 		: int = 1
 var bomb_count 		: int = 0
-var bomb_timer 		: float = 3.0
 var explosion_range : int = 2
 
 func _ready():

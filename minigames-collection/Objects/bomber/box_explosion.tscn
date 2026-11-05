@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cq3gnxyf8fyy6"]
+
+[ext_resource type="Texture2D" uid="uid://ydsvmh4btbnx" path="res://Assets/bomber assets/box_explode_animation.png" id="1_un3gb"]
+[ext_resource type="Script" uid="uid://cgejnn6t1t0mj" path="res://Scripts/BomberScripts/box_explosion.gd" id="2_makan"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_makan"]
+atlas = ExtResource("1_un3gb")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_joeew"]
+atlas = ExtResource("1_un3gb")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqkol"]
+atlas = ExtResource("1_un3gb")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ou2aa"]
+atlas = ExtResource("1_un3gb")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37nrq"]
+atlas = ExtResource("1_un3gb")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e4l18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_makan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_joeew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqkol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ou2aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37nrq")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="box_explosion" type="AnimatedSprite2D" unique_id=1086519681]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_e4l18")
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_makan")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

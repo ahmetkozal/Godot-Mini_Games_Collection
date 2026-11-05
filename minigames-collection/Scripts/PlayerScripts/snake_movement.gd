@@ -160,7 +160,7 @@ func control_shiny_grids(move_dir: Vector2i) -> void:
 	grid_system.queue_redraw()
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	point += 1
 	if k >= MIN_K:
 		k -= 0.05

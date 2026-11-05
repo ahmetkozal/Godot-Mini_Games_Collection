@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://ck5beirn7e88y"]
+
+[ext_resource type="Texture2D" uid="uid://nl1tgxtw5r1r" path="res://Assets/bomber assets/powerup-maxbomb.png" id="1_7qofc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s12bk"]
+atlas = ExtResource("1_7qofc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxufn"]
+atlas = ExtResource("1_7qofc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq715"]
+atlas = ExtResource("1_7qofc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8igi1"]
+atlas = ExtResource("1_7qofc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e4l18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s12bk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxufn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq715")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8igi1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4l18"]
+size = Vector2(16, 16)
+
+[node name="PowerupMaxbombs" type="Node2D" unique_id=1807066552]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=802498215]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_e4l18")
+frame_progress = 0.2023017
+
+[node name="Area2D" type="Area2D" parent="." unique_id=234682061]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2062965303]
+shape = SubResource("RectangleShape2D_e4l18")

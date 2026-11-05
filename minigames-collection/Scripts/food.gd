@@ -10,7 +10,7 @@ extends Node2D
 func _ready() -> void:
 	position = get_random_grid() * CELL_SIZE
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	position = get_random_grid() * CELL_SIZE
 
 func get_random_int(range_int : int) -> int:

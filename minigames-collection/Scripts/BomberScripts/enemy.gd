@@ -9,9 +9,9 @@ const SPEED 			: float = 50.0
 const WAIT_TIME 		: float = 1.0
 const PATROL_DISTANCE 	: int = 5
 
-
 @onready var game_area = $"../.."
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 
 var dead 			: bool
 var remaining_cell 	: int
