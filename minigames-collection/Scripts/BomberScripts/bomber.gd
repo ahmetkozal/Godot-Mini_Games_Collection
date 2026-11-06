@@ -13,12 +13,14 @@ const WALL_SOURCE_ID 	: int = 2
 @export var player_id : int
 @export var is_player : bool
 
-const SPEED 					: float = 60.0
+const SPEED 					: float = 70.0
 
 var dead 			: bool
 var current_cell 	: Vector2i
 var target_cell 	: Vector2i
 var target_dir 		: Vector2i
+var buffered_dir	: Vector2i
+var buffered_cell 	: Vector2i
 var max_bombs 		: int = 1
 var bomb_count 		: int = 0
 var explosion_range : int = 2
@@ -45,12 +47,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		match movement_state:
 			MovementState.IDLE:
-				anim.play("idle")
 				target_dir = get_dir_and_move(player_id)
 				if target_dir != Vector2i.ZERO:
 					target_cell = current_cell + target_dir
-					if is_target_cell_walkable():
+					if is_target_cell_walkable(target_cell):
 						movement_state = MovementState.MOVING
+				else:
+					anim.play("idle")
 			MovementState.MOVING:
 				anim.play("walk")
 				global_position = global_position.move_toward(game_area.tile_map_to_global(target_cell),SPEED * delta)
@@ -58,8 +61,8 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
 			put_bomb()
 
-func is_target_cell_walkable() -> bool:
-	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target_cell)
+func is_target_cell_walkable(target : Vector2i) -> bool:
+	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
 	if game_area.bomb_cells.has(target_cell) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
 		return false
 	return true
