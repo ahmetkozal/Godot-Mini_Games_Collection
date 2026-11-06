@@ -15,7 +15,7 @@ const SPEED_UP_CHANCE 	: float = 0.2
 @export var enemy_scene : PackedScene
 @onready var players: Node2D = $players
 @onready var enemies: Node2D = $enemies
-@onready var tile_map_layer: TileMapLayer = $TileMapLayer
+@export var tile_map_layer: TileMapLayer
 
 var game_area 			: Rect2i
 var bomber_safe_zones 	: Array[Vector2i]

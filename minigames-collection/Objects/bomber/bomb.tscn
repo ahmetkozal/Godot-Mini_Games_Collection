@@ -3,7 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://bcxd2lkgbahk4" path="res://Assets/bomber assets/bomber_bomb.png" id="1_0uecc"]
 [ext_resource type="Script" uid="uid://dblbc50h625ow" path="res://Scripts/BomberScripts/bomb.gd" id="1_qgicg"]
 
-[node name="Bomb" type="Node2D" unique_id=476674475]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm0dr"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qt6nl"]
+size = Vector2(32, 32)
+
+[node name="Bomb" type="StaticBody2D" unique_id=613205052]
+collision_layer = 128
+collision_mask = 0
 script = ExtResource("1_qgicg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=279459243]
@@ -14,5 +22,15 @@ texture = ExtResource("1_0uecc")
 wait_time = 3.0
 
 [node name="animations" type="Node2D" parent="." unique_id=938534049]
+
+[node name="BombCollision" type="CollisionShape2D" parent="." unique_id=388250449]
+shape = SubResource("RectangleShape2D_pm0dr")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=278899468]
+collision_layer = 0
+
+[node name="BombAreaCollision" type="CollisionShape2D" parent="Area2D" unique_id=1416170925]
+shape = SubResource("RectangleShape2D_qt6nl")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

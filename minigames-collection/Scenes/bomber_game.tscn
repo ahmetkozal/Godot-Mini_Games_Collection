@@ -44,10 +44,11 @@ offset_right = 640.0
 offset_bottom = 480.0
 theme = ExtResource("1_u5686")
 
-[node name="GameArea" type="Node2D" parent="." unique_id=1557973857]
+[node name="GameArea" type="Node2D" parent="." unique_id=1557973857 node_paths=PackedStringArray("tile_map_layer")]
 script = ExtResource("2_pxyj7")
 bomber_scene = ExtResource("5_8sgio")
 enemy_scene = ExtResource("4_fsk4b")
+tile_map_layer = NodePath("TileMapLayer")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="GameArea" unique_id=1215335039]
 texture_filter = 1
