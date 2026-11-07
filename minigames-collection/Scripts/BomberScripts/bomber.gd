@@ -28,6 +28,7 @@ var explosion_range : int = 2
 var is_cell_bombed 	: bool
 var net_x 			: float
 var net_y 			: float
+var m_origin_cell 	: Vector2i
 
 enum MovementState {
 	IDLE,
@@ -42,7 +43,7 @@ func _ready():
 	max_slides = 10
 	current_cell = game_area.pos_to_tile_map(global_position)
 	game_area.bombers_arr.append(self)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	
 func _physics_process(delta: float) -> void:
 	if dead:
 		die()
@@ -62,41 +63,48 @@ func idle_state():
 	anim.play("idle")
 	target_dir = get_multiple_dir(player_id)
 	if target_dir != Vector2i.ZERO:
+		m_origin_cell =  current_cell
 		movement_state = MovementState.MOVING
 
 func moving_state(dt : float):
 	anim.play("walk")
-	moving_dir = get_multiple_dir(player_id)
-	moving_dir = moving_dir.normalized()
+	var not_normalized_dir : Vector2i
+	not_normalized_dir = get_multiple_dir(player_id)
+	moving_dir = Vector2(not_normalized_dir).normalized()
 	if moving_dir == Vector2.ZERO:
 		movement_state = MovementState.IDLE
 		return
-	if !is_movement_blocked(moving_dir, Vector2(current_cell)+moving_dir):
+	if !is_movement_blocked(not_normalized_dir, Vector2i(m_origin_cell)+not_normalized_dir):
 		net_x = (global_position + moving_dir * SPEED * dt).x
 		net_y = (global_position + moving_dir * SPEED * dt).y
 		global_position += moving_dir * SPEED * dt
 		current_cell = game_area.pos_to_tile_map(global_position)
+	if global_position.distance_to(game_area.tile_map_to_global(current_cell)) < 0.01:
+		m_origin_cell = current_cell
 
-func is_movement_blocked(m_dir : Vector2, t_cell : Vector2i) -> bool:
+func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
+	# caprazlar
+	if m_dir.x != 0 and m_dir.y != 0:
+		if is_target_cell_walkable(m_origin_cell + m_dir) and is_target_cell_walkable(m_origin_cell+Vector2i(m_dir.x,0)):
+			return false
+		else:
+			return true
+			
 	if is_target_cell_walkable(t_cell):
 		return false
-	if m_dir == Vector2.RIGHT and (game_area.tile_map_to_global(t_cell).x - 32 - net_x < 0.01):
+	if m_dir == Vector2i.RIGHT and (game_area.tile_map_to_global(t_cell).x - 32 - net_x < 0.01):
 		return true
-	if m_dir == Vector2.LEFT and (game_area.tile_map_to_global(t_cell).x + 32 - net_x > 0.01):
+	if m_dir == Vector2i.LEFT and (game_area.tile_map_to_global(t_cell).x + 32 - net_x > 0.01):
 		return true
-	if m_dir == Vector2.DOWN and (game_area.tile_map_to_global(t_cell).y - 32 - net_y < 0.01):
+	if m_dir == Vector2i.DOWN and (game_area.tile_map_to_global(t_cell).y - 32 - net_y < 0.01):
 		return true
-	if m_dir == Vector2.UP and (game_area.tile_map_to_global(t_cell).y + 32 - net_y > 0.01):
+	if m_dir == Vector2i.UP and (game_area.tile_map_to_global(t_cell).y + 32 - net_y > 0.01):
 		return true
-	
-	# caprazlar
-	
-	
 	else: return false
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
-	if game_area.bomb_cells.has(target_cell) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
+	if game_area.bomb_cells.has(target) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
 		return false
 	return true
 
