@@ -3,7 +3,7 @@ extends Node2D
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
-const BOMB_TIMER 		: float = 7.0
+const BOMB_TIMER 		: float = 2.0
 const CENTER_EXPLOSION = preload("res://Objects/bomber/center_explosion.tscn")
 const EXPLOSION = preload("res://Objects/bomber/explosion.tscn")
 const BOX_EXPLOSION = preload("res://Objects/bomber/box_explosion.tscn")
