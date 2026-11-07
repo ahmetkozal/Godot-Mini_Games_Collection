@@ -79,7 +79,7 @@ func moving_state(dt : float):
 		net_y = (global_position + moving_dir * SPEED * dt).y
 		global_position += moving_dir * SPEED * dt
 		current_cell = game_area.pos_to_tile_map(global_position)
-	if global_position.distance_to(game_area.tile_map_to_global(current_cell)) < 0.01:
+	if global_position.x > game_area.tile_map_to_global(Vector2(m_origin_cell)).x:
 		m_origin_cell = current_cell
 
 func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
