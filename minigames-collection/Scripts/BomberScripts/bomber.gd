@@ -1,34 +1,40 @@
 extends CharacterBody2D
 
-const BOX_EXPLOSION = preload("res://Objects/bomber/box_explosion.tscn")
-const BOX_SOURCE_ID 	: int = 0
-const FLOOR_SOURCE_ID 	: int = 1
-const WALL_SOURCE_ID 	: int = 2
+# --- vars about game area ---
+const 			BOX_EXPLOSION 	= preload("res://Objects/bomber/box_explosion.tscn") 	# Box explosin animation
+const 			BOX_SOURCE_ID 	: int = 	0 											# Source id of box in tile set
+const 			FLOOR_SOURCE_ID : int = 	1 											# Source id of floor in tile set
+const 			WALL_SOURCE_ID 	: int = 	2 											# Source id of wall in tile set
+const 			OFFSET 			: int = 	32 											# Grid size actually
+@onready var 	game_area		: GameArea = $"../.." 									# game_area scene to get get data about game
 
-@onready var game_area	: GameArea = $"../.."
-@onready var bombs		: Node2D = $"../../bombs"
-@onready var anim 		: AnimatedSprite2D = $AnimatedSprite2D
+# --- vars about player ---
+@onready var 	anim 		: AnimatedSprite2D = $AnimatedSprite2D 	# bomber animations
+@export var 	player_id 	: int 									# player id is used for taking correct input
+@export var 	is_player 	: bool 									# is bomber human controlled or ai
+const 			SPEED 		: float = 70.0 							# bomber speed
+var 			dead 		: bool				 					# dead
 
-@export var bomb : PackedScene
-@export var player_id : int
-@export var is_player : bool
+# --- vars about bombs ---
+@onready var 	bombs				: Node2D = $"../../bombs" 	# game scene object to collect bombs
+@export var 	bomb 				: PackedScene				# bomb scene
+var 			is_cell_bombed 		: bool						# if target cell is bombed
+var 			max_bombs 			: int = 1					# how many bomb/s can player plant
+var 			bomb_count 			: int = 0					# how many bomb/s player planted
+var 			explosion_range 	: int = 2					# explosion radius
 
-const SPEED 					: float = 70.0
+# --- vars about navigation and movement ---
+var 			current_cell 	: Vector2i 	# bomber's current cell
+var 			target_dir 		: Vector2i 	# taking input and setting direction
+var 			target_cell 	: Vector2i 	# bomber's current cell + target dir
+var 			moving_dir 		: Vector2 	# direction of moving
+# var 			buffered_dir	: Vector2i 	# 
+# var 			buffered_cell 	: Vector2i 	#
+var 			net_x 			: float 	# exact pixel characted moved in x
+var 			net_y 			: float 	# exact pixel characted moved in y
+var 			m_origin_cell 	: Vector2i 	# origin cell that character started moving from
 
-var dead 			: bool
-var current_cell 	: Vector2i
-var target_cell 	: Vector2i
-var target_dir 		: Vector2i
-var moving_dir 		: Vector2
-var buffered_dir	: Vector2i
-var buffered_cell 	: Vector2i
-var max_bombs 		: int = 1
-var bomb_count 		: int = 0
-var explosion_range : int = 2
-var is_cell_bombed 	: bool
-var net_x 			: float
-var net_y 			: float
-var m_origin_cell 	: Vector2i
+
 
 enum MovementState {
 	IDLE,
@@ -92,13 +98,13 @@ func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
 			
 	if is_target_cell_walkable(t_cell):
 		return false
-	if m_dir == Vector2i.RIGHT and (game_area.tile_map_to_global(t_cell).x - 32 - net_x < 0.01):
+	if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
 		return true
-	if m_dir == Vector2i.LEFT and (game_area.tile_map_to_global(t_cell).x + 32 - net_x > 0.01):
+	if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
 		return true
-	if m_dir == Vector2i.DOWN and (game_area.tile_map_to_global(t_cell).y - 32 - net_y < 0.01):
+	if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
 		return true
-	if m_dir == Vector2i.UP and (game_area.tile_map_to_global(t_cell).y + 32 - net_y > 0.01):
+	if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
 		return true
 	else: return false
 
@@ -158,7 +164,6 @@ func put_bomb():
 		
 
 func die():
-	if dead: return
 	dead = true
 	game_area.bombers_arr.erase(self)
 	queue_free()

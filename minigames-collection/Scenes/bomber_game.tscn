@@ -66,8 +66,8 @@ tile_set = SubResource("TileSet_e4l18")
 modulate = Color(1, 0.73828125, 0.73828125, 1)
 self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(48, 48)
-bomb = ExtResource("8_ffo8v")
 is_player = true
+bomb = ExtResource("8_ffo8v")
 metadata/_live_palette_bindings = {
 "modulate": "p8lu4",
 "self_modulate": "p8lu4"
@@ -77,9 +77,9 @@ metadata/_live_palette_bindings = {
 modulate = Color(1, 0.73828125, 0.73828125, 1)
 self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(592, 48)
-bomb = ExtResource("8_ffo8v")
 player_id = 1
 is_player = true
+bomb = ExtResource("8_ffo8v")
 metadata/_live_palette_bindings = {
 "modulate": "p8lu4",
 "self_modulate": "p8lu4"
@@ -89,8 +89,8 @@ metadata/_live_palette_bindings = {
 modulate = Color(1, 0.73828125, 0.73828125, 1)
 self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(48, 432)
-bomb = ExtResource("8_ffo8v")
 player_id = 2
+bomb = ExtResource("8_ffo8v")
 metadata/_live_palette_bindings = {
 "modulate": "p8lu4",
 "self_modulate": "p8lu4"
@@ -100,8 +100,8 @@ metadata/_live_palette_bindings = {
 modulate = Color(1, 0.73828125, 0.73828125, 1)
 self_modulate = Color(1, 0.73828125, 0.73828125, 1)
 position = Vector2(592, 432)
-bomb = ExtResource("8_ffo8v")
 player_id = 3
+bomb = ExtResource("8_ffo8v")
 metadata/_live_palette_bindings = {
 "modulate": "p8lu4",
 "self_modulate": "p8lu4"
