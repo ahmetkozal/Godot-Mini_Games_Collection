@@ -157,12 +157,11 @@ func put_bomb():
 		bomb_count += 1
 		
 
-func die()->void:
-	var self_index : int = game_area.bombers_arr.find(self)
-	if self_index >-1:
-		game_area.bombers_arr.remove_at(self_index)
+func die():
+	if dead: return
+	dead = true
+	game_area.bombers_arr.erase(self)
 	queue_free()
-
 func bombing_state():
 	if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
 		put_bomb()
