@@ -72,52 +72,20 @@ func idle_state():
 		m_origin_cell =  current_cell
 		movement_state = MovementState.MOVING
 
+# - - - MOVING - - - #
 func moving_state(dt : float):
 	anim.play("walk")
-	var not_normalized_dir : Vector2i
-	not_normalized_dir = get_multiple_dir(player_id)
-	moving_dir = Vector2(not_normalized_dir).normalized()
-	if moving_dir == Vector2.ZERO:
+	current_cell = game_area.pos_to_tile_map(global_position)
+	var moving_dir : Vector2i = get_multiple_dir(player_id)
+	if moving_dir == Vector2i.ZERO:
 		movement_state = MovementState.IDLE
 		return
-	if !is_movement_blocked(not_normalized_dir, Vector2i(m_origin_cell)+not_normalized_dir):
-		net_x = (global_position + moving_dir * SPEED * dt).x
-		net_y = (global_position + moving_dir * SPEED * dt).y
-		global_position += moving_dir * SPEED * dt
-		current_cell = game_area.pos_to_tile_map(global_position)
-	if global_position.x > game_area.tile_map_to_global(Vector2(m_origin_cell)).x:
-		m_origin_cell = current_cell
-
-func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
-	# caprazlar
-	if m_dir.x != 0 and m_dir.y != 0:
-		if is_target_cell_walkable(m_origin_cell + m_dir) and is_target_cell_walkable(m_origin_cell+Vector2i(m_dir.x,0)):
-			return false
-		else:
-			return true
-			
-	if is_target_cell_walkable(t_cell):
-		return false
-	if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
-		return true
-	if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
-		return true
-	if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
-		return true
-	if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
-		return true
-	else: return false
-
-func is_target_cell_walkable(target : Vector2i) -> bool:
-	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
-	if game_area.bomb_cells.has(target) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
-		return false
-	return true
-
-func update_current_cell():
-	if global_position.distance_to(game_area.tile_map_to_global(target_cell)) <= 0.01:
-		current_cell = target_cell
-		movement_state = MovementState.IDLE
+	target_dir = get_multiple_dir(player_id)
+	var normalized_dir = Vector2(moving_dir).normalized()
+	net_x = global_position.x + normalized_dir.x * SPEED * dt
+	net_y = global_position.y + normalized_dir.y * SPEED * dt
+	if !is_movement_blocked(moving_dir,current_cell+moving_dir):
+		global_position += normalized_dir * SPEED * dt
 
 func get_multiple_dir(id : int) -> Vector2i:
 	var desired_dir 	: Vector2i
@@ -135,6 +103,34 @@ func get_multiple_dir(id : int) -> Vector2i:
 		anim.flip_h = false
 	desired_dir = Vector2i(movement_x,movement_y)
 	return desired_dir
+
+func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
+	if is_target_cell_walkable(t_cell):
+		return false
+	if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
+		return true
+	if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
+		return true
+	if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
+		return true
+	if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
+		return true
+	else: return false
+
+func is_target_cell_walkable(target : Vector2i) -> bool:
+	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
+	if game_area.bomb_cells.has(target) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
+		return false
+	return true
+# - - - MOVING - - - #
+
+
+func update_current_cell():
+	if global_position.distance_to(game_area.tile_map_to_global(target_cell)) <= 0.01:
+		current_cell = target_cell
+		movement_state = MovementState.IDLE
+
+
 
 #func get_dir(id : int) -> Vector2i:
 	#var desired_dir : Vector2i = Vector2i.ZERO
