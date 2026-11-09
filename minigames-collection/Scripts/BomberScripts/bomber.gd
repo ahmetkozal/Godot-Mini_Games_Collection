@@ -27,13 +27,15 @@ var 			explosion_range 	: int = 2					# explosion radius
 var 			current_cell 	: Vector2i 	# bomber's current cell
 var 			target_dir 		: Vector2i 	# taking input and setting direction
 var 			target_cell 	: Vector2i 	# bomber's current cell + target dir
-var 			moving_dir 		: Vector2 	# direction of moving
+# var 			moving_dir 		: Vector2 	# direction of moving
 # var 			buffered_dir	: Vector2i 	# 
 # var 			buffered_cell 	: Vector2i 	#
 var 			net_x 			: float 	# exact pixel characted moved in x
 var 			net_y 			: float 	# exact pixel characted moved in y
 var 			m_origin_cell 	: Vector2i 	# origin cell that character started moving from
 
+# --- vars about bomber's size and positon ---
+var rect_global_position : Vector2i
 
 
 enum MovementState {
@@ -107,15 +109,16 @@ func get_multiple_dir(id : int) -> Vector2i:
 func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
 	if is_target_cell_walkable(t_cell):
 		return false
-	if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
-		return true
-	if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
-		return true
-	if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
-		return true
-	if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
-		return true
-	else: return false
+	else:
+		if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
+			return true
+		if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
+			return true
+		if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
+			return true
+		if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
+			return true
+		else: return false
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
