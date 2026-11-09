@@ -43,7 +43,9 @@ enum MovementState {
 	MOVING,
 	DEAD
 }
+
 var movement_state = MovementState.IDLE
+
 func _ready():
 	dead = false
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
@@ -107,7 +109,26 @@ func get_multiple_dir(id : int) -> Vector2i:
 	return desired_dir
 
 func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
-	if is_target_cell_walkable(t_cell):
+	if m_dir.x != 0 and m_dir.y != 0:
+			var horizontal_blocked 	: bool = false
+			var vertical_blocked 	: bool = false
+			if !is_target_cell_walkable(current_cell+Vector2i(m_dir.x,0)):
+				horizontal_blocked = true
+			if !is_target_cell_walkable(current_cell+Vector2i(0,m_dir.y)):
+				vertical_blocked = true
+			if horizontal_blocked and vertical_blocked:
+				return true
+			if horizontal_blocked and !vertical_blocked:
+				return false
+				# cornering
+			if !horizontal_blocked and vertical_blocked:
+				return false
+				# cornering
+			if  !horizontal_blocked and !vertical_blocked:
+				return false
+			else:
+				return false
+	elif is_target_cell_walkable(t_cell):
 		return false
 	else:
 		if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
