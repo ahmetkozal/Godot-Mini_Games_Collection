@@ -55,6 +55,9 @@ func _ready():
 	game_area.bombers_arr.append(self)
 	
 func _physics_process(delta: float) -> void:
+	if player_id == 0: 
+		print(current_cell) 
+		print(global_position)
 	if dead:
 		die()
 		return
@@ -109,6 +112,8 @@ func get_multiple_dir(id : int) -> Vector2i:
 	return desired_dir
 
 func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
+	if !can_occupy(Vector2(net_x,net_y)):
+		return true
 	if m_dir.x != 0 and m_dir.y != 0:
 			var horizontal_blocked 	: bool = false
 			var vertical_blocked 	: bool = false
@@ -119,10 +124,10 @@ func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
 			if horizontal_blocked and vertical_blocked:
 				return true
 			if horizontal_blocked and !vertical_blocked:
-				return false
+				return true
 				# cornering
 			if !horizontal_blocked and vertical_blocked:
-				return false
+				return true
 				# cornering
 			if  !horizontal_blocked and !vertical_blocked:
 				return false
@@ -131,15 +136,13 @@ func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
 	elif is_target_cell_walkable(t_cell):
 		return false
 	else:
-		if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01):
+		if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01) or\
+		m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01)or\
+		m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01)or\
+		m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
 			return true
-		if m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01):
-			return true
-		if m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01):
-			return true
-		if m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
-			return true
-		else: return false
+		else:
+			return false
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
@@ -147,7 +150,20 @@ func is_target_cell_walkable(target : Vector2i) -> bool:
 		return false
 	return true
 # - - - MOVING - - - #
+func can_occupy(pos: Vector2) -> bool:
+	var half = OFFSET / 2.0
+	var epsilon = 0.01
 
+	for x in [-half + epsilon, half - epsilon]:
+		for y in [-half + epsilon, half - epsilon]:
+
+			var corner = pos + Vector2(x, y)
+			var cell = game_area.pos_to_tile_map(corner)
+
+			if !is_target_cell_walkable(cell):
+				return false
+
+	return true
 
 func update_current_cell():
 	if global_position.distance_to(game_area.tile_map_to_global(target_cell)) <= 0.01:
@@ -187,6 +203,7 @@ func die():
 	dead = true
 	game_area.bombers_arr.erase(self)
 	queue_free()
+	
 func bombing_state():
 	if Input.is_action_just_pressed("bomber"+str(player_id)+"bomb"):
 		put_bomb()
