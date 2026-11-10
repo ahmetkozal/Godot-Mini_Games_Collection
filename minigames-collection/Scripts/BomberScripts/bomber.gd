@@ -9,11 +9,12 @@ const 			OFFSET 			: int = 	32 											# Grid size actually
 @onready var 	game_area		: GameArea = $"../.." 									# game_area scene to get get data about game
 
 # --- vars about player ---
-@onready var 	anim 		: AnimatedSprite2D = $AnimatedSprite2D 	# bomber animations
-@export var 	player_id 	: int 									# player id is used for taking correct input
-@export var 	is_player 	: bool 									# is bomber human controlled or ai
-const 			SPEED 		: float = 70.0 							# bomber speed
-var 			dead 		: bool				 					# dead
+@onready var 	anim 			: AnimatedSprite2D = $AnimatedSprite2D 	# bomber animations
+@export var 	player_id 		: int 									# player id is used for taking correct input
+@export var 	is_player 		: bool 									# is bomber human controlled or ai
+const 			SPEED 			: float = 70.0 							# bomber speed
+var 			dead 			: bool				 					# dead
+var 			bombs_planted 	: Array
 
 # --- vars about bombs ---
 @onready var 	bombs				: Node2D = $"../../bombs" 	# game scene object to collect bombs
@@ -30,8 +31,6 @@ var 			target_cell 	: Vector2i 	# bomber's current cell + target dir
 # var 			moving_dir 		: Vector2 	# direction of moving
 # var 			buffered_dir	: Vector2i 	# 
 # var 			buffered_cell 	: Vector2i 	#
-var 			net_x 			: float 	# exact pixel characted moved in x
-var 			net_y 			: float 	# exact pixel characted moved in y
 var 			m_origin_cell 	: Vector2i 	# origin cell that character started moving from
 
 # --- vars about bomber's size and positon ---
@@ -71,13 +70,35 @@ func _physics_process(delta: float) -> void:
 
 func idle_state():
 	anim.play("idle")
+	target_dir = get_multiple_dir(player_id)
+	if target_dir != Vector2i.ZERO:
+		movement_state = MovementState.MOVING
 
 # - - - MOVING - - - #
 func moving_state(dt : float):
 	anim.play("walk")
+	var net_x 			: float 	= 0.0
+	var net_y 			: float 	= 0.0
+	var next_position 	: Vector2 	= Vector2.ZERO
+	var moving_dir : Vector2i = get_multiple_dir(player_id)
+	if moving_dir != Vector2i.ZERO:
+		net_x 			= moving_dir.x * SPEED * dt
+		net_y 			= moving_dir.y * SPEED * dt
+		next_position 	= global_position + Vector2(net_x,net_y).normalized()
+		if can_occupy(next_position):
+			global_position = next_position
+			current_cell 	= game_area.pos_to_tile_map(global_position)
+		else:
+			if abs(net_y) > abs(net_x):
+				move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
+	else:
+		movement_state = MovementState.IDLE
+
+
+func align_movement() -> void:
+	pass
 
 func get_multiple_dir(id : int) -> Vector2i:
-	var desired_dir 	: Vector2i
 	var prefix_id = "bomber"+str(id)
 	var input_right : int = int(Input.is_action_pressed(prefix_id+"right"))
 	var input_left 	: int = int(Input.is_action_pressed(prefix_id+"left"))
@@ -92,40 +113,10 @@ func get_multiple_dir(id : int) -> Vector2i:
 		return Vector2i(movement_x, 0)
 	if movement_y != 0:
 		return Vector2i(0, movement_y)
-	return Vector2i.ZERO
+	return Vector2i(movement_x,movement_y)
 
-func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
-	if !can_occupy(Vector2(net_x,net_y)):
-		return true
-	if m_dir.x != 0 and m_dir.y != 0:
-			var horizontal_blocked 	: bool = false
-			var vertical_blocked 	: bool = false
-			if !is_target_cell_walkable(current_cell+Vector2i(m_dir.x,0)):
-				horizontal_blocked = true
-			if !is_target_cell_walkable(current_cell+Vector2i(0,m_dir.y)):
-				vertical_blocked = true
-			if horizontal_blocked and vertical_blocked:
-				return true
-			if horizontal_blocked and !vertical_blocked:
-				return true
-				# cornering
-			if !horizontal_blocked and vertical_blocked:
-				return true
-				# cornering
-			if  !horizontal_blocked and !vertical_blocked:
-				return false
-			else:
-				return false
-	elif is_target_cell_walkable(t_cell):
-		return false
-	else:
-		if m_dir == Vector2i.RIGHT 	and (game_area.tile_map_to_global(t_cell).x - OFFSET - net_x < 0.01) or\
-		m_dir == Vector2i.LEFT 	and (game_area.tile_map_to_global(t_cell).x + OFFSET - net_x > 0.01)or\
-		m_dir == Vector2i.DOWN 	and (game_area.tile_map_to_global(t_cell).y - OFFSET - net_y < 0.01)or\
-		m_dir == Vector2i.UP 	and (game_area.tile_map_to_global(t_cell).y + OFFSET - net_y > 0.01):
-			return true
-		else:
-			return false
+# func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
+# 	return false
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
@@ -147,12 +138,6 @@ func can_occupy(pos: Vector2) -> bool:
 				return false
 
 	return true
-
-func update_current_cell():
-	if global_position.distance_to(game_area.tile_map_to_global(target_cell)) <= 0.01:
-		current_cell = target_cell
-		movement_state = MovementState.IDLE
-
 
 
 #func get_dir(id : int) -> Vector2i:
@@ -178,7 +163,7 @@ func put_bomb():
 		bomba.global_position = game_area.tile_map_to_global(current_cell)
 		bomba.game_area = game_area
 		bombs.add_child(bomba)
-		game_area.bomb_cells.append(current_cell)
+		# game_area.bomb_cells.append(current_cell)
 		bomb_count += 1
 		
 

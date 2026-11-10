@@ -4,11 +4,11 @@ const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
 const BOMB_TIMER 		: float = 2.0
-const CENTER_EXPLOSION = preload("res://Objects/bomber/center_explosion.tscn")
-const EXPLOSION = preload("res://Objects/bomber/explosion.tscn")
-const BOX_EXPLOSION = preload("res://Objects/bomber/box_explosion.tscn")
-@onready var bomb_collision: CollisionShape2D = $BombCollision
+const CENTER_EXPLOSION 	= preload("res://Objects/bomber/center_explosion.tscn")
+const EXPLOSION 		= preload("res://Objects/bomber/explosion.tscn")
+const BOX_EXPLOSION 	= preload("res://Objects/bomber/box_explosion.tscn")
 
+@onready var bomb_collision: CollisionShape2D = $BombCollision
 @onready var animations: Node2D = $animations
 @onready var timer: Timer = $Timer
 
@@ -20,7 +20,7 @@ var explosion_range 		: int
 var tile_map_layer 			: TileMapLayer
 var center_explosion_anim 	: AnimatedSprite2D
 var cells_to_damage 		: Array[Vector2i]
-
+var col_active 				: bool = false
 func _ready() -> void:
 	tile_map_layer = game_area.tile_map_layer
 	timer.wait_time = BOMB_TIMER
@@ -85,7 +85,7 @@ func _on_timer_timeout() -> void:
 	explode()
 
 
-#func _on_area_2d_body_exited(body: Node2D) -> void:
-	#print("ACTIVATE COLLISION")
-	#print(body)
-	#bomb_collision.disabled = false
+func _on_area_2d_body_exited(_body: Node2D) -> void:
+	# print("ACTIVATE COLLISION")
+	# print(body.player_id)
+	game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))

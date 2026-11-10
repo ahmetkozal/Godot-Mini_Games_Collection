@@ -11,11 +11,11 @@ size = Vector2(32, 32)
 
 [node name="Bomb" type="StaticBody2D" unique_id=613205052]
 collision_layer = 128
-collision_mask = 0
 script = ExtResource("1_qgicg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=279459243]
 texture_filter = 1
+scale = Vector2(2, 2)
 texture = ExtResource("1_0uecc")
 
 [node name="Timer" type="Timer" parent="." unique_id=994152033]
@@ -34,3 +34,4 @@ collision_layer = 0
 shape = SubResource("RectangleShape2D_qt6nl")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
