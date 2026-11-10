@@ -85,12 +85,17 @@ func moving_state(dt : float):
 		net_x 			= moving_dir.x * SPEED * dt
 		net_y 			= moving_dir.y * SPEED * dt
 		next_position 	= global_position + Vector2(net_x,net_y).normalized()
+		if abs(net_y) > abs(net_x) and abs(global_position.x - game_area.tile_map_to_global(current_cell).x) > 0.001:
+			print("aligning x")
+			global_position.x += (game_area.tile_map_to_global(current_cell).x - global_position.x) * SPEED/4 * dt
+			#move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
+		elif abs(net_x) > abs(net_y) and abs(global_position.y - game_area.tile_map_to_global(current_cell).y) > 0.001:
+			print("aligning y")
+			global_position.y += (game_area.tile_map_to_global(current_cell).y - global_position.y) * SPEED/4 * dt
+			#move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
 		if can_occupy(next_position):
 			global_position = next_position
 			current_cell 	= game_area.pos_to_tile_map(global_position)
-		else:
-			if abs(net_y) > abs(net_x):
-				move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
 	else:
 		movement_state = MovementState.IDLE
 
