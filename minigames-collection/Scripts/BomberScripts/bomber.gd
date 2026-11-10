@@ -55,9 +55,6 @@ func _ready():
 	game_area.bombers_arr.append(self)
 	
 func _physics_process(delta: float) -> void:
-	if player_id == 0: 
-		print(current_cell) 
-		print(global_position)
 	if dead:
 		die()
 		return
@@ -74,42 +71,28 @@ func _physics_process(delta: float) -> void:
 
 func idle_state():
 	anim.play("idle")
-	target_dir = get_multiple_dir(player_id)
-	if target_dir != Vector2i.ZERO:
-		m_origin_cell =  current_cell
-		movement_state = MovementState.MOVING
 
 # - - - MOVING - - - #
 func moving_state(dt : float):
 	anim.play("walk")
-	current_cell = game_area.pos_to_tile_map(global_position)
-	var moving_dir : Vector2i = get_multiple_dir(player_id)
-	if moving_dir == Vector2i.ZERO:
-		movement_state = MovementState.IDLE
-		return
-	target_dir = get_multiple_dir(player_id)
-	var normalized_dir = Vector2(moving_dir).normalized()
-	net_x = global_position.x + normalized_dir.x * SPEED * dt
-	net_y = global_position.y + normalized_dir.y * SPEED * dt
-	if !is_movement_blocked(moving_dir,current_cell+moving_dir):
-		global_position += normalized_dir * SPEED * dt
 
 func get_multiple_dir(id : int) -> Vector2i:
 	var desired_dir 	: Vector2i
-	var input_right : int = int(Input.is_action_pressed("bomber"+str(id)+"right"))
-	var input_left 	: int = int(Input.is_action_pressed("bomber"+str(id)+"left"))
-	var input_down 	: int = int(Input.is_action_pressed("bomber"+str(id)+"down"))
-	var input_up 	: int = int(Input.is_action_pressed("bomber"+str(id)+"up"))
+	var prefix_id = "bomber"+str(id)
+	var input_right : int = int(Input.is_action_pressed(prefix_id+"right"))
+	var input_left 	: int = int(Input.is_action_pressed(prefix_id+"left"))
+	var input_down 	: int = int(Input.is_action_pressed(prefix_id+"down"))
+	var input_up 	: int = int(Input.is_action_pressed(prefix_id+"up"))
 	
 	var movement_x : int = input_right - input_left
 	var movement_y : int = input_down - input_up
 	
-	if input_right < input_left:
-		anim.flip_h = true
-	elif input_right > input_left:
-		anim.flip_h = false
-	desired_dir = Vector2i(movement_x,movement_y)
-	return desired_dir
+	if movement_x != 0:
+		anim.flip_h = movement_x < 0
+		return Vector2i(movement_x, 0)
+	if movement_y != 0:
+		return Vector2i(0, movement_y)
+	return Vector2i.ZERO
 
 func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
 	if !can_occupy(Vector2(net_x,net_y)):
