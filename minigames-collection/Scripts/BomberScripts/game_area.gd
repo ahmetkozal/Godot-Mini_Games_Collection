@@ -42,7 +42,7 @@ func _ready() -> void:
 	create_safe_zones() # Creating safe zones to leave empty cells
 	set_up_enemy_spawn_areas() # divides map to 8 pieces to determenine enemy spawn points
 	get_floor_cells() # get all floors position into an array
-	#spawn_enemies() 
+	spawn_enemies() 
 	create_enemy_safe_zones()
 	set_up_available_cells()
 	place_boxes()
