@@ -17,7 +17,7 @@ func apply_powerup(bomber : PlayerBomber):
 		Powerups.FIRE_RANGE:
 			bomber.explosion_range += 1
 		Powerups.MAX_RANGE:
-			bomber.explosion_range = 10
+			bomber.explosion_range += 10
 		Powerups.SKATE:
 			bomber.speed *= 1.1
 

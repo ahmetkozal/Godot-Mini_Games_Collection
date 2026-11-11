@@ -78,7 +78,6 @@ func add_animation(dir: Vector2i, explosion_range_array: Array[Vector2i], explos
 	explosion_anim.frame = 0
 
 	var area: Area2D = explosion_anim.get_node("Area2D")
-	#area.monitoring = false
 
 	return explosion_anim
 
@@ -92,7 +91,6 @@ func explode() -> void:
 
 	for explosion_anim in animations.get_children():
 		var area: Area2D = explosion_anim.get_node("Area2D")
-		area.set_deferred("monitoring", true)
 
 	for i in cells_to_damage:
 		if tile_map_layer.get_cell_source_id(i) == BOX_SOURCE_ID:
