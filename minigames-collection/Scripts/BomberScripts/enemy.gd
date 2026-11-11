@@ -76,12 +76,14 @@ func get_new_dir() -> Vector2i:
 			return dir*-1
 	else:
 		return Vector2i.ZERO
-
+	
 func get_available_neighbours() -> Array[Vector2i]:
 	var available_cells : Array[Vector2i]
 	for i in dirs:
 		if tile_map_layer.get_cell_source_id(current_cell+i) == FLOOR_SOURCE_ID:
-			available_cells.append(i)
+			if !game_area.bomb_cells.has(current_cell+i):
+				print(game_area.bomb_cells)
+				available_cells.append(i)
 	return available_cells
 
 func _on_body_entered(body: Node2D) -> void:
