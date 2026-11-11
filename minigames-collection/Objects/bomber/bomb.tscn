@@ -10,7 +10,8 @@ size = Vector2(32, 32)
 size = Vector2(32, 32)
 
 [node name="Bomb" type="StaticBody2D" unique_id=613205052]
-collision_layer = 128
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_qgicg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=279459243]
@@ -29,9 +30,11 @@ disabled = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=278899468]
 collision_layer = 0
+collision_mask = 128
 
 [node name="BombAreaCollision" type="CollisionShape2D" parent="Area2D" unique_id=1416170925]
 shape = SubResource("RectangleShape2D_qt6nl")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

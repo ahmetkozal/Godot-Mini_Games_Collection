@@ -21,7 +21,7 @@ var 			bombs_planted 	: Array
 @onready var 	bombs				: Node2D = $"../../bombs" 	# game scene object to collect bombs
 @export var 	bomb 				: PackedScene				# bomb scene
 var 			is_cell_bombed 		: bool						# if target cell is bombed
-var 			max_bombs 			: int = 1					# how many bomb/s can player plant
+var 			max_bombs 			: int = 2					# how many bomb/s can player plant
 var 			bomb_count 			: int = 0					# how many bomb/s player planted
 var 			explosion_range 	: int = 1					# explosion radius
 

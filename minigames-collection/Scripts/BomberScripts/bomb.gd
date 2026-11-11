@@ -1,4 +1,5 @@
-extends Node2D
+class_name BombObject
+extends StaticBody2D
 
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
@@ -35,6 +36,7 @@ var tile_map_layer 			: TileMapLayer
 var center_explosion_anim 	: AnimatedSprite2D
 var cells_to_damage 		: Array[Vector2i]
 var col_active 				: bool = false
+var has_exploded 				: bool = false
 
 var rng 					: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -44,13 +46,13 @@ func _ready() -> void:
 	tile_map_layer = game_area.tile_map_layer
 	timer.wait_time = BOMB_TIMER
 	timer.start()
+
 	cell = bomber.current_cell
-	cells_to_damage = set_and_get_explosion_area()
-	center_explosion_anim.animation_finished.connect(exploded)
+	explosion_range = bomber.explosion_range
+	
 	
 func set_and_get_explosion_area() -> Array[Vector2i]:
 	var explosion_range_array : Array[Vector2i]
-	explosion_range = bomber.explosion_range
 	center_explosion_anim = add_animation(Vector2i.ZERO,explosion_range_array,CENTER_EXPLOSION,global_position,cell)
 	for i in dirs:
 		for x in range(1,explosion_range+1):
@@ -64,31 +66,53 @@ func set_and_get_explosion_area() -> Array[Vector2i]:
 					break
 	return explosion_range_array
 
-func add_animation(dir : Vector2i,explosion_range_array : Array[Vector2i],explosion, bomb_pos, explosion_cell : Vector2i)->AnimatedSprite2D:
+
+func add_animation(dir: Vector2i, explosion_range_array: Array[Vector2i], explosion, bomb_pos: Vector2, explosion_cell: Vector2i) -> AnimatedSprite2D:
 	explosion_range_array.append(explosion_cell)
-	var explosion_anim = explosion.instantiate()
+
+	var explosion_anim: AnimatedSprite2D = explosion.instantiate()
 	animations.add_child(explosion_anim)
+
 	explosion_anim.global_position = bomb_pos
 	explosion_anim.rotation = Vector2(dir).angle()
 	explosion_anim.frame = 0
+
+	var area: Area2D = explosion_anim.get_node("Area2D")
+	#area.monitoring = false
+
 	return explosion_anim
 
+
 func explode() -> void:
+	if has_exploded:
+		return
+	has_exploded = true
+	cells_to_damage = set_and_get_explosion_area()
+	center_explosion_anim.animation_finished.connect(exploded)
+
+	for explosion_anim in animations.get_children():
+		var area: Area2D = explosion_anim.get_node("Area2D")
+		area.set_deferred("monitoring", true)
+
 	for i in cells_to_damage:
 		if tile_map_layer.get_cell_source_id(i) == BOX_SOURCE_ID:
-			game_area.tile_map_layer.set_cell(i,FLOOR_SOURCE_ID,Vector2i(0,0))
-			var exploded_box : AnimatedSprite2D = BOX_EXPLOSION.instantiate()
-			tile_map_layer.add_child(exploded_box)
-			exploded_box.global_position = game_area.tile_map_to_global(i)
-			exploded_box.frame = 0
-			exploded_box.play()
-			# --- POWERUP ---
+			explode_box(i)
 			spawn_powerup(i)
-			# --- POWERUP ---
+
 	kill_in_area(game_area.bombers_arr)
 	kill_in_area(game_area.enemies_arr)
-	for i in animations.get_children():
-		i.play()
+
+	for explosion_anim in animations.get_children():
+		explosion_anim.play()
+
+
+func explode_box(pos : Vector2i):
+	game_area.tile_map_layer.set_cell(pos,FLOOR_SOURCE_ID,Vector2i(0,0))
+	var exploded_box : AnimatedSprite2D = BOX_EXPLOSION.instantiate()
+	tile_map_layer.add_child(exploded_box)
+	exploded_box.global_position = game_area.tile_map_to_global(pos)
+	exploded_box.frame = 0
+	exploded_box.play()
 
 func spawn_powerup(pos : Vector2i):
 	var random_number = rng.randf()
@@ -120,7 +144,7 @@ func _on_timer_timeout() -> void:
 		bomber.bomb_count -= 1
 	if bomb_index > -1:
 		game_area.bomb_cells.remove_at(bomb_index)
-	explode()
+	explode.call_deferred()
 
 
 func _on_area_2d_body_exited(_body: Node2D) -> void:
@@ -129,3 +153,8 @@ func _on_area_2d_body_exited(_body: Node2D) -> void:
 	var bomb_vec : Vector2i = game_area.pos_to_tile_map(global_position)	
 	if !game_area.bomb_cells.has(bomb_vec):
 		game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	print("CHAIN")
+	explode.call_deferred()
