@@ -28,6 +28,7 @@ var floor_cells 		: Array[Vector2i]
 var box_cells 			: Array[Vector2i]
 var power_up_cells 		: Array[Vector2i]
 var bomb_cells 			: Array[Vector2i]
+var bomb_cells_enemy 	: Array[Vector2i]
 var enemies_arr 		: Array[Area2D]
 var bombers_arr 		: Array[CharacterBody2D]
 

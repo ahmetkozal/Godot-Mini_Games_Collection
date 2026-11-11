@@ -48,6 +48,7 @@ func _ready() -> void:
 	timer.start()
 
 	cell = bomber.current_cell
+	game_area.bomb_cells_enemy.append(cell)
 	explosion_range = bomber.explosion_range
 	
 	
@@ -138,10 +139,13 @@ func kill_in_area(chararcter_arr : Array):
 
 func _on_timer_timeout() -> void:
 	var bomb_index : int = game_area.bomb_cells.find(cell)
+	var bomb_index_enemy : int = game_area.bomb_cells_enemy.find(cell)
 	if is_instance_valid(bomber):
 		bomber.bomb_count -= 1
 	if bomb_index > -1:
 		game_area.bomb_cells.remove_at(bomb_index)
+	if bomb_index_enemy > -1:
+		game_area.bomb_cells_enemy.remove_at(bomb_index_enemy)
 	explode.call_deferred()
 
 

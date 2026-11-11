@@ -76,31 +76,38 @@ func idle_state():
 		movement_state = MovementState.MOVING
 
 # - - - MOVING - - - #
-func moving_state(dt : float):
+func moving_state(dt: float):
 	anim.play("walk")
-	var net_x 			: float 	= 0.0
-	var net_y 			: float 	= 0.0
-	var next_position 	: Vector2 	= Vector2.ZERO
-	var moving_dir : Vector2i = get_multiple_dir(player_id)
-	if moving_dir != Vector2i.ZERO:
-		net_x 			= moving_dir.x * speed * dt
-		net_y 			= moving_dir.y * speed * dt
-		next_position 	= global_position + Vector2(net_x,net_y)
-		align_movement(net_x ,net_y,next_position, dt)
-		if can_occupy(next_position):
-			global_position = next_position
-			current_cell 	= game_area.pos_to_tile_map(global_position)
-	else:
+	var moving_dir := get_multiple_dir(player_id)
+	if moving_dir == Vector2i.ZERO:
 		movement_state = MovementState.IDLE
+		return
+
+	var net_x := moving_dir.x * speed * dt
+	var net_y := moving_dir.y * speed * dt
+	align_movement(net_x, net_y, dt)
+
+	var next_position := global_position + Vector2(net_x, net_y)
+	if can_occupy(next_position):
+		global_position = next_position
+		current_cell = game_area.pos_to_tile_map(global_position)
 
 
-func align_movement(net_x : float, net_y : float,next_position : Vector2,dt: float) -> void:
-	if abs(net_y) > abs(net_x) and abs(global_position.x - game_area.tile_map_to_global(current_cell).x) > 0.0001:
-		#print("aligning x")
-		global_position.x += (game_area.tile_map_to_global(current_cell).x - global_position.x) * speed/4 * dt
-	elif abs(net_x) > abs(net_y) and abs(global_position.y - game_area.tile_map_to_global(current_cell).y) > 0.0001:
-		#print("aligning y")
-		global_position.y += (game_area.tile_map_to_global(current_cell).y - global_position.y) * speed/4 * dt
+func align_movement(net_x: float, net_y: float, dt: float) -> void:
+	var grid_pos := game_area.tile_map_to_global(current_cell)
+	var diff := grid_pos - global_position
+	if diff.length_squared() < 0.0001:
+		return
+
+	var f := 1.0 - exp(-15.0 * dt)  
+
+	var w_x := clampf(absf(net_y) / (speed * dt), 0.0, 1.0)
+	var w_y := clampf(absf(net_x) / (speed * dt), 0.0, 1.0)
+
+	if w_x > 0.0:
+		global_position.x = grid_pos.x if absf(diff.x) < 0.5 else lerp(global_position.x, grid_pos.x, f)
+	if w_y > 0.0:
+		global_position.y = grid_pos.y if absf(diff.y) < 0.5 else lerp(global_position.y, grid_pos.y, f)
 
 func get_multiple_dir(id : int) -> Vector2i:
 	var prefix_id = "bomber"+str(id)

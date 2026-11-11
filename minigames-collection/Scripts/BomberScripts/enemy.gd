@@ -1,7 +1,5 @@
 extends Area2D
 
-#signal timeout
-
 const BOX_SOURCE_ID 	: int = 0
 const FLOOR_SOURCE_ID 	: int = 1
 const WALL_SOURCE_ID 	: int = 2
@@ -67,7 +65,7 @@ func get_new_dir() -> Vector2i:
 	if available_neighbours.size()>0:
 		for i in range(0,available_neighbours.size()):
 			if available_neighbours[i] != dir*-1:
-				if current_cell+available_neighbours[i] not in game_area.bomb_cells:
+				if current_cell+available_neighbours[i] not in game_area.bomb_cells_enemy:
 					new_dirs.append(available_neighbours[i])
 		if new_dirs.size()>0:
 			var random_index : int = randi_range(0,new_dirs.size()-1)
@@ -81,8 +79,7 @@ func get_available_neighbours() -> Array[Vector2i]:
 	var available_cells : Array[Vector2i]
 	for i in dirs:
 		if tile_map_layer.get_cell_source_id(current_cell+i) == FLOOR_SOURCE_ID:
-			if !game_area.bomb_cells.has(current_cell+i):
-				print(game_area.bomb_cells)
+			if !game_area.bomb_cells_enemy.has(current_cell+i):
 				available_cells.append(i)
 	return available_cells
 
