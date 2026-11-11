@@ -1,3 +1,4 @@
+class_name PlayerBomber
 extends CharacterBody2D
 
 # --- vars about game area ---
@@ -12,7 +13,7 @@ const 			OFFSET 			: int = 	32 											# Grid size actually
 @onready var 	anim 			: AnimatedSprite2D = $AnimatedSprite2D 	# bomber animations
 @export var 	player_id 		: int 									# player id is used for taking correct input
 @export var 	is_player 		: bool 									# is bomber human controlled or ai
-const 			SPEED 			: float = 70.0 							# bomber speed
+var 			speed 			: float = 70.0 							# bomber speed
 var 			dead 			: bool				 					# dead
 var 			bombs_planted 	: Array
 
@@ -22,7 +23,7 @@ var 			bombs_planted 	: Array
 var 			is_cell_bombed 		: bool						# if target cell is bombed
 var 			max_bombs 			: int = 1					# how many bomb/s can player plant
 var 			bomb_count 			: int = 0					# how many bomb/s player planted
-var 			explosion_range 	: int = 2					# explosion radius
+var 			explosion_range 	: int = 1					# explosion radius
 
 # --- vars about navigation and movement ---
 var 			current_cell 	: Vector2i 	# bomber's current cell
@@ -82,17 +83,10 @@ func moving_state(dt : float):
 	var next_position 	: Vector2 	= Vector2.ZERO
 	var moving_dir : Vector2i = get_multiple_dir(player_id)
 	if moving_dir != Vector2i.ZERO:
-		net_x 			= moving_dir.x * SPEED * dt
-		net_y 			= moving_dir.y * SPEED * dt
-		next_position 	= global_position + Vector2(net_x,net_y).normalized()
-		if abs(net_y) > abs(net_x) and abs(global_position.x - game_area.tile_map_to_global(current_cell).x) > 0.001:
-			print("aligning x")
-			global_position.x += (game_area.tile_map_to_global(current_cell).x - global_position.x) * SPEED/4 * dt
-			#move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
-		elif abs(net_x) > abs(net_y) and abs(global_position.y - game_area.tile_map_to_global(current_cell).y) > 0.001:
-			print("aligning y")
-			global_position.y += (game_area.tile_map_to_global(current_cell).y - global_position.y) * SPEED/4 * dt
-			#move_toward(global_position.x,game_area.tile_map_to_global(current_cell).x,dt)
+		net_x 			= moving_dir.x * speed * dt
+		net_y 			= moving_dir.y * speed * dt
+		next_position 	= global_position + Vector2(net_x,net_y)
+		align_movement(net_x ,net_y,next_position, dt)
 		if can_occupy(next_position):
 			global_position = next_position
 			current_cell 	= game_area.pos_to_tile_map(global_position)
@@ -100,8 +94,13 @@ func moving_state(dt : float):
 		movement_state = MovementState.IDLE
 
 
-func align_movement() -> void:
-	pass
+func align_movement(net_x : float, net_y : float,next_position : Vector2,dt: float) -> void:
+	if abs(net_y) > abs(net_x) and abs(global_position.x - game_area.tile_map_to_global(current_cell).x) > 0.0001:
+		#print("aligning x")
+		global_position.x += (game_area.tile_map_to_global(current_cell).x - global_position.x) * speed/4 * dt
+	elif abs(net_x) > abs(net_y) and abs(global_position.y - game_area.tile_map_to_global(current_cell).y) > 0.0001:
+		#print("aligning y")
+		global_position.y += (game_area.tile_map_to_global(current_cell).y - global_position.y) * speed/4 * dt
 
 func get_multiple_dir(id : int) -> Vector2i:
 	var prefix_id = "bomber"+str(id)
@@ -119,9 +118,6 @@ func get_multiple_dir(id : int) -> Vector2i:
 	if movement_y != 0:
 		return Vector2i(0, movement_y)
 	return Vector2i(movement_x,movement_y)
-
-# func is_movement_blocked(m_dir : Vector2i, t_cell : Vector2i) -> bool:
-# 	return false
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
@@ -162,14 +158,15 @@ func can_occupy(pos: Vector2) -> bool:
 
 func put_bomb():
 	if bomb_count < max_bombs:
-		anim.play("put")
-		var bomba : Node2D = bomb.instantiate()
-		bomba.bomber = self
-		bomba.global_position = game_area.tile_map_to_global(current_cell)
-		bomba.game_area = game_area
-		bombs.add_child(bomba)
-		# game_area.bomb_cells.append(current_cell)
-		bomb_count += 1
+		if !game_area.bomb_cells.has(current_cell):
+			anim.play("put")
+			var bomba : Node2D = bomb.instantiate()
+			bomba.bomber = self
+			bomba.global_position = game_area.tile_map_to_global(current_cell)
+			bomba.game_area = game_area
+			bombs.add_child(bomba)
+			# game_area.bomb_cells.append(current_cell)
+			bomb_count += 1
 		
 
 func die():

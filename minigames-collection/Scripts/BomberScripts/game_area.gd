@@ -15,6 +15,7 @@ const SPEED_UP_CHANCE 	: float = 0.2
 @export var enemy_scene : PackedScene
 @onready var players: Node2D = $players
 @onready var enemies: Node2D = $enemies
+@onready var powerups: Node2D = $powerups
 @export var tile_map_layer: TileMapLayer
 
 var game_area 			: Rect2i
@@ -41,7 +42,7 @@ func _ready() -> void:
 	create_safe_zones() # Creating safe zones to leave empty cells
 	set_up_enemy_spawn_areas() # divides map to 8 pieces to determenine enemy spawn points
 	get_floor_cells() # get all floors position into an array
-	spawn_enemies() 
+	#spawn_enemies() 
 	create_enemy_safe_zones()
 	set_up_available_cells()
 	place_boxes()

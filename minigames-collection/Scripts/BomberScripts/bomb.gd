@@ -8,7 +8,21 @@ const CENTER_EXPLOSION 	= preload("res://Objects/bomber/center_explosion.tscn")
 const EXPLOSION 		= preload("res://Objects/bomber/explosion.tscn")
 const BOX_EXPLOSION 	= preload("res://Objects/bomber/box_explosion.tscn")
 
-@onready var bomb_collision: CollisionShape2D = $BombCollision
+const POWERUP_CHANCE 	: float = 0.3
+const MAX_RANGE_CHANCE 	: float = 0.1
+const MAX_BOMB_CHANCE 	: float = 0.3
+const FIRE_RANGE_CHANCE : float = 0.6
+const SKATE_CHANCE 		: float = 1.0
+
+
+
+
+const POWERUP_FIRE = preload("res://Objects/bomber/powerup_fire.tscn")
+const POWERUP_FULLFIRE = preload("res://Objects/bomber/powerup_fullfire.tscn")
+const POWERUP_SKATE = preload("res://Objects/bomber/powerup_skate.tscn")
+const POWERUP_MAXBOMBS = preload("res://Objects/bomber/powerup_maxbombs.tscn")
+
+
 @onready var animations: Node2D = $animations
 @onready var timer: Timer = $Timer
 
@@ -21,7 +35,12 @@ var tile_map_layer 			: TileMapLayer
 var center_explosion_anim 	: AnimatedSprite2D
 var cells_to_damage 		: Array[Vector2i]
 var col_active 				: bool = false
+
+var rng 					: RandomNumberGenerator = RandomNumberGenerator.new()
+
+
 func _ready() -> void:
+	rng.randomize()
 	tile_map_layer = game_area.tile_map_layer
 	timer.wait_time = BOMB_TIMER
 	timer.start()
@@ -63,10 +82,29 @@ func explode() -> void:
 			exploded_box.global_position = game_area.tile_map_to_global(i)
 			exploded_box.frame = 0
 			exploded_box.play()
+			# --- POWERUP ---
+			spawn_powerup(i)
+			# --- POWERUP ---
 	kill_in_area(game_area.bombers_arr)
 	kill_in_area(game_area.enemies_arr)
 	for i in animations.get_children():
 		i.play()
+
+func spawn_powerup(pos : Vector2i):
+	var random_number = rng.randf()
+	if random_number <= POWERUP_CHANCE:
+		var rnd = rng.randf()
+		var powerup_obj
+		if rnd <= MAX_RANGE_CHANCE:
+			powerup_obj = POWERUP_FULLFIRE.instantiate()
+		elif rnd <= MAX_BOMB_CHANCE:
+			powerup_obj = POWERUP_MAXBOMBS.instantiate()
+		elif rnd <= FIRE_RANGE_CHANCE:
+			powerup_obj = POWERUP_FIRE.instantiate()
+		elif rnd <= SKATE_CHANCE:
+			powerup_obj = POWERUP_SKATE.instantiate()
+		powerup_obj.global_position = game_area.tile_map_to_global(pos)
+		game_area.powerups.add_child(powerup_obj)
 
 func exploded() ->void:
 	queue_free()
@@ -88,4 +126,6 @@ func _on_timer_timeout() -> void:
 func _on_area_2d_body_exited(_body: Node2D) -> void:
 	# print("ACTIVATE COLLISION")
 	# print(body.player_id)
-	game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))
+	var bomb_vec : Vector2i = game_area.pos_to_tile_map(global_position)	
+	if !game_area.bomb_cells.has(bomb_vec):
+		game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))

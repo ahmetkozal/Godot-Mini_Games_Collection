@@ -1,82 +1,8 @@
 [gd_scene format=3 uid="uid://mwljy53nxgxa"]
 
-[ext_resource type="Texture2D" uid="uid://xtajfvglwj6a" path="res://Assets/bomber assets/powerup-fire.png" id="1_44iek"]
+[ext_resource type="PackedScene" uid="uid://dcunyxkdyu8s5" path="res://Objects/bomber/powerup_class.tscn" id="1_44iek"]
+[ext_resource type="Script" uid="uid://cau267njvu6tk" path="res://Scripts/BomberScripts/powerup.gd" id="2_a2t23"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a2t23"]
-atlas = ExtResource("1_44iek")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y6w8g"]
-atlas = ExtResource("1_44iek")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7yyy8"]
-atlas = ExtResource("1_44iek")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2fw81"]
-atlas = ExtResource("1_44iek")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bog5q"]
-atlas = ExtResource("1_44iek")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5lhjk"]
-atlas = ExtResource("1_44iek")
-region = Rect2(80, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_605yh"]
-atlas = ExtResource("1_44iek")
-region = Rect2(96, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gejm7"]
-atlas = ExtResource("1_44iek")
-region = Rect2(112, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_53wvu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a2t23")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y6w8g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7yyy8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2fw81")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bog5q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5lhjk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_605yh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gejm7")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4l18"]
-size = Vector2(16, 16)
-
-[node name="PowerupFire" type="Node2D" unique_id=777898823]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1448439588]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_53wvu")
-frame_progress = 0.34222406
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1536327774]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=24106173]
-shape = SubResource("RectangleShape2D_e4l18")
+[node name="powerup_fire" unique_id=1781534961 instance=ExtResource("1_44iek")]
+script = ExtResource("2_a2t23")
+powerup_ = 1

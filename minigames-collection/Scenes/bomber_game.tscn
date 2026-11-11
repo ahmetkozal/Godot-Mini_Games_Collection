@@ -106,3 +106,5 @@ metadata/_live_palette_bindings = {
 "modulate": "p8lu4",
 "self_modulate": "p8lu4"
 }
+
+[node name="powerups" type="Node2D" parent="GameArea" unique_id=977272498]
