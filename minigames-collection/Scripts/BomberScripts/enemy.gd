@@ -36,7 +36,9 @@ func _physics_process(delta: float) -> void:
 		var self_index : int = game_area.enemies_arr.find(self)
 		if self_index >-1:
 			game_area.enemies_arr.remove_at(self_index)
-		queue_free()
+		animated_sprite_2d.play("dead")
+		if !animated_sprite_2d.is_playing():
+			queue_free()
 	else:
 		if dir == Vector2i.LEFT:
 			animated_sprite_2d.flip_h = true
@@ -84,4 +86,9 @@ func get_available_neighbours() -> Array[Vector2i]:
 	return available_cells
 
 func _on_body_entered(body: Node2D) -> void:
-	body.die()
+	if !dead:
+		body.die()
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	queue_free()
