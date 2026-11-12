@@ -150,9 +150,9 @@ func _on_timer_timeout() -> void:
 
 
 func _on_area_2d_body_exited(_body: Node2D) -> void:
-	# print("ACTIVATE COLLISION")
+	print("ACTIVATE COLLISION")
 	# print(body.player_id)
-	var bomb_vec : Vector2i = game_area.pos_to_tile_map(global_position)	
+	var bomb_vec : Vector2i = game_area.pos_to_tile_map(global_position)
 	if !game_area.bomb_cells.has(bomb_vec):
 		game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))
 

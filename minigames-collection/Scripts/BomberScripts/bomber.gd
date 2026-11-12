@@ -128,7 +128,9 @@ func get_multiple_dir(id : int) -> Vector2i:
 
 func is_target_cell_walkable(target : Vector2i) -> bool:
 	var target_cell_source_id = game_area.tile_map_layer.get_cell_source_id(target)
-	if game_area.bomb_cells.has(target) or target_cell_source_id == WALL_SOURCE_ID or target_cell_source_id == BOX_SOURCE_ID:
+	if game_area.bomb_cells.has(target) or \
+	target_cell_source_id == WALL_SOURCE_ID or \
+	target_cell_source_id == BOX_SOURCE_ID:
 		return false
 	return true
 # - - - MOVING - - - #
