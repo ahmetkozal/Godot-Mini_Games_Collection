@@ -86,9 +86,18 @@ func add_animation(dir: Vector2i, explosion_range_array: Array[Vector2i], explos
 func explode() -> void:
 	if has_exploded:
 		return
+	var bomb_index : int = game_area.bomb_cells.find(cell)
+	var bomb_index_enemy : int = game_area.bomb_cells_enemy.find(cell)
 	has_exploded = true
 	cells_to_damage = set_and_get_explosion_area()
 	center_explosion_anim.animation_finished.connect(exploded)
+	if is_instance_valid(bomber):
+		bomber.bomb_count -= 1
+	if bomb_index > -1:
+		game_area.bomb_cells.remove_at(bomb_index)
+		print("bomb deleted")
+	if bomb_index_enemy > -1:
+		game_area.bomb_cells_enemy.remove_at(bomb_index_enemy)
 
 	for explosion_anim in animations.get_children():
 		var area: Area2D = explosion_anim.get_node("Area2D")
@@ -138,19 +147,11 @@ func kill_in_area(chararcter_arr : Array):
 			i.dead=true
 
 func _on_timer_timeout() -> void:
-	var bomb_index : int = game_area.bomb_cells.find(cell)
-	var bomb_index_enemy : int = game_area.bomb_cells_enemy.find(cell)
-	if is_instance_valid(bomber):
-		bomber.bomb_count -= 1
-	if bomb_index > -1:
-		game_area.bomb_cells.remove_at(bomb_index)
-	if bomb_index_enemy > -1:
-		game_area.bomb_cells_enemy.remove_at(bomb_index_enemy)
 	explode.call_deferred()
 
 
 func _on_area_2d_body_exited(_body: Node2D) -> void:
-	print("ACTIVATE COLLISION")
+	# print("ACTIVATE COLLISION")
 	# print(body.player_id)
 	var bomb_vec : Vector2i = game_area.pos_to_tile_map(global_position)
 	if !game_area.bomb_cells.has(bomb_vec):
