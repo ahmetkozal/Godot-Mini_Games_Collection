@@ -157,6 +157,6 @@ func _on_area_2d_body_exited(_body: Node2D) -> void:
 		game_area.bomb_cells.append(game_area.pos_to_tile_map(global_position))
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
+func _on_area_2d_area_entered(_area: Area2D) -> void:
 	print("CHAIN")
 	explode.call_deferred()
